@@ -12,4 +12,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // call this method when post button is clicked
+  post(){
+    console.log("Creating a post...");
+  }
+
 }
