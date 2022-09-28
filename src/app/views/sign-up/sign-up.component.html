@@ -1,6 +1,29 @@
-<h1>SIGN UP</h1>
-<form>
-    <div class="form-group">
 
-    </div>
+
+<form [formGroup]=signUpForm (ngSubmit)=submitSignUpForm()>
+    <h1>SIGN UP</h1>
+    <div class="form-group my-3">
+
+        <input id="firstName" class="form-control" formControlName=firstName
+        type="firstName"  maxlength="36" placeholder="First name">
+
+        <br>
+        <input id="lastName" class="form-control" formControlName=lastName
+        type="lastName"  maxlength="36" placeholder="lastName">
+
+        <br>
+        <input id="email" class="form-control" formControlName=email 
+        type="email"  maxlength="36" placeholder="email">
+
+        <br>
+        <input id="password" class="form-control" formControlName=password
+        type="password"  maxlength="100" placeholder="password">
+
+        <br>
+        <button class="loginBtn" (click)="login()">Login</button>
+
+        <br>
+        <button class="submitBtn">Sign Up</button>
+
+      </div>
 </form>

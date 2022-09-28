@@ -1,6 +1,10 @@
 <div class="container">
 	<h2>Login!</h2>
 	<input type="text" #searchbar (keyup)="getEmail($event)" placeholder="Email.">
+	<br>
 	<input type="text" #searchbar (keyup)="getPassword($event)" placeholder="Password">
+	<br>
 	<button (click)="login()">Login</button>
+	<br>
+	<button (click)="signUp()">Sign Up</button>
 </div>

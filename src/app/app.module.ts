@@ -9,9 +9,10 @@ import { FooterComponent } from './views/footer/footer.component';
 import { TestComponent } from './views/testViews/test/test.component';
 import { LoginComponent } from './views/login/login.component';
 import { SignUpComponent } from './views/sign-up/sign-up.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './views/mains/home/home.component';
 import { ErrorComponent } from './views/errorViews/error/error.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -27,8 +28,9 @@ import { ErrorComponent } from './views/errorViews/error/error.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    CommonModule,
     FormsModule,
-    
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],

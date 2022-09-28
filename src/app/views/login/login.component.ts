@@ -30,6 +30,10 @@ export class LoginComponent implements OnInit {
     this.password = event.target.value;
   }
 
+  signUp(){
+    this.router.navigate([AppRoutes.SIGNUP]);
+  }
+
   login(){
     this.authService.login(this.email, this.password)
     // .pipe(map((res: ResponseLogin) => {
