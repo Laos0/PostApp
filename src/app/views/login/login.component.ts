@@ -40,13 +40,15 @@ export class LoginComponent implements OnInit {
     .subscribe({
       next: (result: ResponseLogin) => {
         
-        console.log(result)
+        // log the response to see what the json looks like
+        // console.log(result)
+
         if(result.isLoggedIn){
           console.log("SUCCESS LOGIN")
           this.router.navigate([AppRoutes.HOME]);
         }else{
-          console.log("FAILED LOGIN")
-          
+          console.error("FAILED LOGIN: FROM login.component.ts")
+          this.router.navigate([AppRoutes.ERROR])
         }
         
 
