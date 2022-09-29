@@ -45,9 +45,16 @@ export class LoginComponent implements OnInit {
       next: (result: ResponseLogin) => {
         
         // log the response to see what the json looks like
-        // console.log(result)
-
+        console.log("THIS IS THE JSON", result)
+        console.log("<< Login component >>", result)
         if(result.isLoggedIn){
+
+
+          /* ** TODO **
+            Backend has to send a json of UserDetails and we have to store userdetail onto the session
+          */
+          
+          sessionStorage.setItem("userDetails", JSON.stringify(result));
           console.log("SUCCESS LOGIN")
           this.router.navigate([AppRoutes.HOME]);
         }else{
