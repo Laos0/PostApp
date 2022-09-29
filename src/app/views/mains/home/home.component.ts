@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  public firstName: string;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.firstName = JSON.parse(sessionStorage.getItem("userDetails")).firstName;
   }
 
   // call this method when post button is clicked

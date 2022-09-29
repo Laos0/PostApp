@@ -74,6 +74,9 @@ export class SignUpComponent implements OnInit {
         if(result.isCreated){
           // if succesful creation, take user to Home component and say its name
           this.router.navigate([AppRoutes.HOME]);
+
+          // store user details into session
+          sessionStorage.setItem("userDetails", JSON.stringify(result));
         }else{
           // Tell the user that an email with it exists already
 
