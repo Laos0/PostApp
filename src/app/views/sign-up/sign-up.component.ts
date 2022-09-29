@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppRoutes } from 'src/app/app-routes';
+import { IUser } from 'src/app/models/iuser';
 import { User } from 'src/app/models/user';
 import { ResponseCreateUser } from 'src/app/reponses/response-create-user';
 import { UserService } from 'src/app/services/user-service/user.service';
@@ -66,6 +67,14 @@ export class SignUpComponent implements OnInit {
     let user = new User(this.getFirstName(), this.getLastName(), 
       this.getEmail(), this.getPassword());
 
+    /* interface way instead of using class
+    const iuser: IUser = {
+      firstName: this.getFirstName(),
+
+    }
+
+    */
+
     // call the user service to create a new user to send to the backend
     this.userService.createUser(user).subscribe({
       next: (result: ResponseCreateUser) => {
@@ -77,6 +86,7 @@ export class SignUpComponent implements OnInit {
 
           // store user details into session so that we can use it on home component and more...
           sessionStorage.setItem("userDetails", JSON.stringify(result));
+          console.log("<<  THIS IS THE NEW USER >>: ", result);
         }else{
           // Tell the user that an email with it exists already
 

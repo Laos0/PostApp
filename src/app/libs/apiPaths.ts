@@ -13,4 +13,6 @@ export class ApiEndPoints {
     public static readonly USER_CREATE: string = this.BASE_URL + this.TARGET_VERSION + 'users/new';
     public static readonly USER_LOGIN: string = this.BASE_URL + this.TARGET_VERSION + 'auth/login';
     public static readonly USER_LOGOUT: string = this.BASE_URL + this.TARGET_VERSION + 'user/logout';
+
+    public static readonly USER_CREATE_POST: string = this.BASE_URL + this.TARGET_VERSION + 'post';
 }

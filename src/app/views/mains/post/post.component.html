@@ -1,12 +1,16 @@
 <div class="container">
 
-        <form>
+        <form [formGroup]=postForm (ngSubmit)=submitPost()>
             <h3>Title</h3>
-            <input type="text" placeholder="Title">
+            
+            <input id="title" class="form-control" formControlName=title
+            type="title"  maxlength="100" placeholder="Title...">
             <br>
-            <textarea placeholder="text..."></textarea>
+            <input type="textarea" class="form-control" formControlName=textField placeholder="text...">
             <br>
+
             <button>Submit</button>
+            
         </form>
 
 </div>
