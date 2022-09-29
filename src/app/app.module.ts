@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './views/mains/home/home.component';
 import { ErrorComponent } from './views/errorViews/error/error.component';
 import { CommonModule } from '@angular/common';
+import { PostComponent } from './views/mains/post/post.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CommonModule } from '@angular/common';
     LoginComponent,
     SignUpComponent,
     HomeComponent,
-    ErrorComponent
+    ErrorComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
