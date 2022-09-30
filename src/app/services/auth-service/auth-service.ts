@@ -15,6 +15,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  // sending email and password to endpoint to login
   login(email: string, password: string): Observable<ResponseLogin>{
     return this.http.post<ResponseLogin>(ApiEndPoints.USER_LOGIN, {
       email,

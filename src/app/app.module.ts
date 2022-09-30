@@ -14,6 +14,7 @@ import { HomeComponent } from './views/mains/home/home.component';
 import { ErrorComponent } from './views/errorViews/error/error.component';
 import { CommonModule } from '@angular/common';
 import { PostComponent } from './views/mains/post/post.component';
+import { PostDetailsComponent } from './views/mains/post-details/post-details.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { PostComponent } from './views/mains/post/post.component';
     SignUpComponent,
     HomeComponent,
     ErrorComponent,
-    PostComponent
+    PostComponent,
+    PostDetailsComponent
   ],
   imports: [
     BrowserModule,

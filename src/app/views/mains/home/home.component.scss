@@ -15,4 +15,19 @@
     h2 {
         padding-bottom: 1em;
     }
+
+    .postContainer{
+
+        .selectableList{
+            background-color: #A9927D;
+            padding: 1em;
+            margin: 1em;
+            border: thin solid black;
+        }
+        .selectableList:hover{
+            background-color: white;
+            cursor: pointer;
+        }
+
+    }
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AppRoutes } from 'src/app/app-routes';
 import { IPost } from 'src/app/models/ipost';
 import { PostService } from 'src/app/services/post-service/post.service';
 
@@ -12,7 +14,7 @@ export class PostComponent implements OnInit {
 
   public postForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private postService: PostService) { }
+  constructor(private fb: FormBuilder, private postService: PostService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -46,13 +48,18 @@ export class PostComponent implements OnInit {
       views: 0
     }
 
-    console.log("<<  psotr component >>", JSON.parse(sessionStorage.getItem("userDetails")).userId)
+    // console.log("<<  psotr component >>", JSON.parse(sessionStorage.getItem("userDetails")).id)
 
     // if you want http to fire, you must SUBSCRIBE
     this.postService.createPost(post).subscribe({
-      next: (res: IPost) => {
+      next: (res: any) => {
 
-        console.log("<< post component >>", res);
+        console.log("<< post components >>", res);
+        if(res === true){
+          // if the response is true, redirect client to home component 
+          // and add post into an array list?
+          this.router.navigate([AppRoutes.HOME]);
+        }
       },
       error: (e) => {
         console.error(e);

@@ -1,4 +1,10 @@
 <div class="container">
     <h2>WELCOME, {{firstName}}</h2>
     <button (click)="post()">Add A Post</button>
+
+    <ul class="postContainer">
+        <li class="selectableList" *ngFor="let post of posts">
+            <span>{{post.title}}</span>
+        </li>
+    </ul>
 </div>

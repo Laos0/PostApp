@@ -5,6 +5,7 @@ import { ApiEndPoints } from 'src/app/libs/apiPaths';
 import { IPost } from 'src/app/models/ipost';
 import { User } from 'src/app/models/user';
 import { ResponseCreateUser } from 'src/app/reponses/response-create-user';
+import { ResponseGetAllPosts } from 'src/app/reponses/response-get-all-posts';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +18,16 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
+  // sending request to the backend to create a post
   createPost(post: IPost): Observable<IPost>{
     console.log(ApiEndPoints.USER_CREATE_POST)
 
-    
     return this.http.post<IPost>(ApiEndPoints.USER_CREATE_POST, post, this.httpOptions);
+  }
+
+  // get all the posts and load it onto the screen
+  getAllPosts(): Observable<IPost[]>{
+    console.log("<< post service: get all posts request >>")
+    return this.http.get<IPost[]>(ApiEndPoints.GET_POSTS);
   }
 }
