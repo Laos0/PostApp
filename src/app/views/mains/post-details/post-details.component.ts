@@ -16,8 +16,7 @@ export class PostDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // TODO: We are not getting line 32 when we get to this component
-    // though after a refresh everything works.
+
     this.postDetailsService.onSelectPost$.subscribe((data) => {
    
       this.post = {
@@ -31,8 +30,10 @@ export class PostDetailsComponent implements OnInit {
       };
       
       console.log("<< Selected Post >>", this.post.date)
+      sessionStorage.setItem("post", JSON.stringify(this.post));
     })
 
+    console.log(this.post)
   }
 
 }

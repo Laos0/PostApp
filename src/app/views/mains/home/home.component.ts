@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
 import { IPost } from 'src/app/models/ipost';
+import { IPostDetails } from 'src/app/models/ipost-details';
 import { ResponseGetAllPosts } from 'src/app/reponses/response-get-all-posts';
 import { PostDetailsService } from 'src/app/services/post-details-service/post-details.service';
 import { PostService } from 'src/app/services/post-service/post.service';
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit {
   public posts: any[];
 
   constructor(private router: Router, private postService: PostService, 
-    private postDetailsService: PostDetailsService) { }
+    private postDetailsService: PostDetailsService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.firstName = JSON.parse(sessionStorage.getItem("userDetails")).firstName;
@@ -54,7 +55,20 @@ export class HomeComponent implements OnInit {
     // the obeservable will carry the data
     this.postDetailsService.onSelectPost(post);
 
-    this.router.navigate([AppRoutes.POST_DETAILS])
+    // every time a post is click, we need to update its view count
+    // might need to cast post into an iPost
+    let postDetails: IPostDetails = {
+        id: post.id,
+        userId: post.userId,
+        title: post.title,
+        text: post.text,
+        views: post.views,
+        date: post.createdDate
+    }
+    this.postService.addViewCount(postDetails).subscribe();
+
+    // this.router.navigate([AppRoutes.POST_DETAILS], {relativeTo: this.activatedRoute})
+    this.router.navigate([AppRoutes.POST_DETAILS]);
     //console.log("CLICKED", post.createdDate);
   }
 

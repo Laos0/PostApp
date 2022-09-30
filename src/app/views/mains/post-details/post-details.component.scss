@@ -1,3 +1,8 @@
 .container {
-    text-align: center;
+    text-align: left;
+    .commentSection{
+        background-color: gray;
+        padding: 2em;
+        margin: 1em;
+    }
 }

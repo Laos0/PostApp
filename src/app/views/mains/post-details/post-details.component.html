@@ -1,3 +1,25 @@
 <div class="container">
-    <span></span>
+    
+    <div class="postDetailSection">
+        <h2 class="title">{{post.title}}</h2>
+        <p class="textField">{{post.text}}</p>
+        <span class="date">Created: {{post.date}}</span>
+        <br>
+        <span class="views">Views: {{post.views}}</span>
+        <br>
+
+        <!-- TODO: Delete and Edit buttons are only visible if session userId === post.userId-->
+        <button>Delete</button><button>Edit</button><button>comment</button>
+    </div>
+
+    <div class="commentSection">
+        <ul>
+            <!-- TODO: *ngFor comments related to this post-->
+            <li>
+                <span>Tom Banks</span>
+                <p>Oh yeah, yes god created....</p>
+            </li>
+            <button>Reply</button>
+        </ul>
+    </div>
 </div>

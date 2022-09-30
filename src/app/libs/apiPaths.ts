@@ -16,4 +16,6 @@ export class ApiEndPoints {
 
     public static readonly USER_CREATE_POST: string = this.BASE_URL + this.TARGET_VERSION + 'posts/new';
     public static readonly GET_POSTS: string = this.BASE_URL + this.TARGET_VERSION + 'posts/all';
+    public static readonly POST_ADD_VIEW_COUNT: string = this.BASE_URL + this.TARGET_VERSION + 'posts/id/addViews';
+
 }

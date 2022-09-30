@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class PostDetailsService {
 
 
   // when subject publishes, all listeners on the observable will react to 
-  private _onSelectPost: Subject<any> = new Subject<any>();
+  private _onSelectPost: ReplaySubject<any> = new ReplaySubject<any>(1);
   public onSelectPost$: Observable<any> = this._onSelectPost.asObservable();
   
   constructor() { }
