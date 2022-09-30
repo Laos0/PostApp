@@ -40,6 +40,7 @@ export class PostComponent implements OnInit {
   getTextField(){return this.postForm.get('textField').value;};
 
 
+  // TODO: need to fix the date so that it wont be undefined 
   submitPost(){
     const post: IPost = {
       userId: JSON.parse(sessionStorage.getItem("userDetails")).id,

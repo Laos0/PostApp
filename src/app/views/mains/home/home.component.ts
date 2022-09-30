@@ -4,6 +4,7 @@ import { first } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
 import { IPost } from 'src/app/models/ipost';
 import { ResponseGetAllPosts } from 'src/app/reponses/response-get-all-posts';
+import { PostDetailsService } from 'src/app/services/post-details-service/post-details.service';
 import { PostService } from 'src/app/services/post-service/post.service';
 
 @Component({
@@ -14,9 +15,10 @@ import { PostService } from 'src/app/services/post-service/post.service';
 export class HomeComponent implements OnInit {
 
   public firstName: string;
-  public posts: IPost[];
+  public posts: any[];
 
-  constructor(private router: Router, private postService: PostService) { }
+  constructor(private router: Router, private postService: PostService, 
+    private postDetailsService: PostDetailsService) { }
 
   ngOnInit(): void {
     this.firstName = JSON.parse(sessionStorage.getItem("userDetails")).firstName;
@@ -25,9 +27,11 @@ export class HomeComponent implements OnInit {
 
   getAllPosts(){
     this.postService.getAllPosts().subscribe({
-      next: (res: IPost[]) => {
+      // I have to use dataType any, otherwise I wont be able
+      // to extract the createdDate as my IPost does not have it declared in the beginnning
+      next: (res: any) => {
         this.posts = res;
-        console.log("<< home component: Get post >>", this.posts)
+        console.log("<< home component: Get post >>", res)
       },
       error: (e) => {
         console.error(e);
@@ -39,6 +43,19 @@ export class HomeComponent implements OnInit {
   post(){
     // redirect client to Post component to post
     this.router.navigate([AppRoutes.POST]);
+  }
+
+  // very bad way of type usage
+  // this will solve current problem as I did not declared date on IPost in the beginning
+  getPostDetails(post: any){
+
+    // we will pass the post data to the PostDetail component by storing it in our subject
+    // the data will be retreieved in the PostDetail component which
+    // the obeservable will carry the data
+    this.postDetailsService.onSelectPost(post);
+
+    this.router.navigate([AppRoutes.POST_DETAILS])
+    //console.log("CLICKED", post.createdDate);
   }
 
 }

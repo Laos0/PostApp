@@ -3,8 +3,8 @@
     <button (click)="post()">Add A Post</button>
 
     <ul class="postContainer">
-        <li class="selectableList" *ngFor="let post of posts">
-            <span>{{post.title}}</span>
+        <li class="selectableList" *ngFor="let post of posts" (click)="getPostDetails(post)">
+            <span>{{post.title}} Posted By: {{post.userId}} Created Date: {{post.createdDate}}</span>
         </li>
     </ul>
 </div>
