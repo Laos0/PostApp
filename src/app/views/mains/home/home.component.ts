@@ -4,9 +4,11 @@ import { first } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
 import { IPost } from 'src/app/models/ipost';
 import { IPostDetails } from 'src/app/models/ipost-details';
+import { IUser } from 'src/app/models/iuser';
 import { ResponseGetAllPosts } from 'src/app/reponses/response-get-all-posts';
 import { PostDetailsService } from 'src/app/services/post-details-service/post-details.service';
 import { PostService } from 'src/app/services/post-service/post.service';
+import { UserService } from 'src/app/services/user-service/user.service';
 
 @Component({
   selector: 'app-home',
@@ -15,14 +17,28 @@ import { PostService } from 'src/app/services/post-service/post.service';
 })
 export class HomeComponent implements OnInit {
 
+  // the current user's information
+  public userDetails: IUser;
+
+  // The post information
   public firstName: string;
   public posts: any[];
 
   constructor(private router: Router, private postService: PostService, 
-    private postDetailsService: PostDetailsService, private activatedRoute: ActivatedRoute) { }
+    private postDetailsService: PostDetailsService, private activatedRoute: ActivatedRoute,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.firstName = JSON.parse(sessionStorage.getItem("userDetails")).firstName;
+    const user = JSON.parse(sessionStorage.getItem("userDetails"));
+    this.userDetails = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      password: user.password
+    }
+    console.log("<<  home component >>", user)
     this.getAllPosts();
   }
 
@@ -54,6 +70,7 @@ export class HomeComponent implements OnInit {
 
   // very bad way of type usage
   // this will solve current problem as I did not declared date on IPost in the beginning
+  // this method is linked to post list on butotn click
   getPostDetails(post: any){
 
     // we will pass the post data to the PostDetail component by storing it in our subject
