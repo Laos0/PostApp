@@ -3,6 +3,9 @@
     <div class="postDetailSection">
         <h2 class="title">{{post.title}}</h2>
         <p class="textField">{{post.text}}</p>
+        <!--TODO: Do a post request by passing in the-->
+        <span>{{userDetails.firstName}} {{userDetails.lastName}}</span>
+        <br>
         <span class="date">Created: {{post.date}}</span>
         <br>
         <span class="views">Views: {{post.views}}</span>
@@ -13,8 +16,12 @@
     </div>
 
     <div class="commentSection">
+
+        <!-- TODO: Need Input section when users click on comment button,
+            This is only Visible when comment button is pressed-->
+
         <ul>
-            <!-- TODO: *ngFor comments related to this post-->
+            <!-- TODO: *ngFor all comments related to this post-->
             <li>
                 <span>Tom Banks</span>
                 <p>Oh yeah, yes god created....</p>

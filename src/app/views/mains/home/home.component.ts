@@ -26,6 +26,12 @@ export class HomeComponent implements OnInit {
     this.getAllPosts();
   }
 
+  testMethod(val: boolean): void{
+    if(val){
+      console.log(val);
+    }else{console.warn("val is false")};
+  }
+
   getAllPosts(){
     this.postService.getAllPosts().subscribe({
       // I have to use dataType any, otherwise I wont be able

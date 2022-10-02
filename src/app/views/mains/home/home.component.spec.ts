@@ -20,4 +20,14 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('For this testMethod()', () => {
+    
+      it('should say true', () => {
+        
+        const logSpy:jasmine.Spy = spyOn(console, 'log');
+        component.testMethod(false);
+        expect(logSpy).toBe(true);
+      });
+  })
 });
