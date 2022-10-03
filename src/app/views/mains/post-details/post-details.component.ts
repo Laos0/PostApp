@@ -4,6 +4,7 @@ import { IPost } from 'src/app/models/ipost';
 import { IPostDetails } from 'src/app/models/ipost-details';
 import { IUser } from 'src/app/models/iuser';
 import { PostDetailsService } from 'src/app/services/post-details-service/post-details.service';
+import { PostService } from 'src/app/services/post-service/post.service';
 import { UserService } from 'src/app/services/user-service/user.service';
 
 @Component({
@@ -15,11 +16,16 @@ export class PostDetailsComponent implements OnInit {
 
   public post: IPostDetails;
   public userDetails: IUser;
+  public isUserPost: boolean = false;
+  private sessionUser: any;
 
-  constructor(private postDetailsService: PostDetailsService, private userService: UserService) { }
+  constructor(private postDetailsService: PostDetailsService, 
+    private userService: UserService,
+    private postService: PostService) { }
 
   ngOnInit(): void {
 
+    this.sessionUser = JSON.parse(sessionStorage.getItem("userDetails"));
 
     this.postDetailsService.onSelectPost$.subscribe((data) => {
    
@@ -40,6 +46,13 @@ export class PostDetailsComponent implements OnInit {
       // sessionStorage.setItem("post", JSON.stringify(this.post));
       this.getUserPostDetails(this.post.userId);
     })
+
+    console.log("THE USER's SESSION ID",this.post.id);
+    if(this.sessionUser.id === this.post.userId){
+      this.isUserPost = true;
+      console.log("<< PostDetails component >> POST BELONGS TO SESSION USER")
+
+    }
 
 
     //console.log(this.post)
@@ -64,6 +77,17 @@ export class PostDetailsComponent implements OnInit {
         }
       });
     console.log("getUserPostDetails");
+  }
+
+  // TODO: Implement delete function when delete button is clicked
+  // Make sure to subscribe to the function
+  deletePost(id: number){
+    // TODO: Show a popup modal and see if user wants to confirm delete before executing next line
+    
+    this.postService.deletePostById(id).pipe(take(1), timeout(10000)).subscribe();
+
+    //TODO: After deleting the post, redirect them back to home component
+
   }
 
 }

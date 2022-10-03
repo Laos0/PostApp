@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
@@ -93,6 +94,11 @@ export class HomeComponent implements OnInit {
     // this.router.navigate([AppRoutes.POST_DETAILS], {relativeTo: this.activatedRoute})
     this.router.navigate([AppRoutes.POST_DETAILS]);
     //console.log("CLICKED", post.createdDate);
+  }
+
+  convertDate(date: string){
+    let datePipe = new DatePipe(date);
+    return datePipe;
   }
 
 }

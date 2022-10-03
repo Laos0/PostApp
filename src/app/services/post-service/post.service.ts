@@ -35,4 +35,9 @@ export class PostService {
     console.log("<< post service: view count increase >>");
     return this.http.post<any>(ApiEndPoints.POST_ADD_VIEW_COUNT, post, this.httpOptions);
   }
+
+  deletePostById(postId: number): Observable<any>{
+    console.log("<< post service: view count increase >>");
+    return this.http.delete<any>(ApiEndPoints.DELETE_POST + postId + "/delete");
+  }
 }
