@@ -1,0 +1,17 @@
+<div class="container">
+
+    <form [formGroup]=postForm (ngSubmit)=editPost()>
+        <h3>Edit Post</h3>
+        
+        <input id="title" class="form-control" formControlName=title
+        type="title"  maxlength="100" placeholder="Title...">
+        <br>
+        <input type="textarea" class="form-control" formControlName=textField placeholder="text...">
+        <br>
+
+        <button>Submit</button>
+        
+    </form>
+
+</div>
+<router-outlet></router-outlet>

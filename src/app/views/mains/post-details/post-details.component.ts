@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
+import { ConsoleColor } from 'src/app/libs/console-color';
 import { IPostDetails } from 'src/app/models/ipost-details';
 import { IUser } from 'src/app/models/iuser';
 import { DialogService } from 'src/app/services/dialog-service/dialog.service';
@@ -104,8 +105,10 @@ export class PostDetailsComponent implements OnInit {
   }
 
   // TODO: Finish implementation of editPost
-  editPost(id: number){
-
+  editPost(post: IPostDetails){
+    this.postDetailsService.onSelectPost(post);
+    this.router.navigate([AppRoutes.POST_EDIT]);
+    console.log("%c Editing post " + post.id, ConsoleColor.GREEN);
   }
 
 }

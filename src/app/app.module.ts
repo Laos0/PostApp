@@ -18,6 +18,7 @@ import { PostDetailsComponent } from './views/mains/post-details/post-details.co
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule} from "@angular/material/dialog";
 import { ComfirmDeleteComponent } from './views/dialogs/comfirm-delete/comfirm-delete.component';
+import { EditPostComponent } from './views/mains/edit-post/edit-post.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ComfirmDeleteComponent } from './views/dialogs/comfirm-delete/comfirm-d
     ErrorComponent,
     PostComponent,
     PostDetailsComponent,
-    ComfirmDeleteComponent
+    ComfirmDeleteComponent,
+    EditPostComponent
   ],
   imports: [
     BrowserModule,

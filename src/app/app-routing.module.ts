@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './views/errorViews/error/error.component';
 import { LoginComponent } from './views/login/login.component';
+import { EditPostComponent } from './views/mains/edit-post/edit-post.component';
 import { HomeComponent } from './views/mains/home/home.component';
 import { PostDetailsComponent } from './views/mains/post-details/post-details.component';
 import { PostComponent } from './views/mains/post/post.component';
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'post', component: PostComponent},
   {path: 'details', component: PostDetailsComponent},
+  {path: 'edit', component: EditPostComponent},
   {path: '**', component: ErrorComponent}
 ];
 

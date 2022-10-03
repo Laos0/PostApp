@@ -11,10 +11,9 @@
         <span class="views">Views: {{post.views}}</span>
         <br>
 
-        <!-- TODO: Delete and Edit buttons are only visible if session userId === post.userId-->
         <ng-template [ngIf]="isUserPost">
             <button class="dlt-btn" style="background-color: red" (click)="deletePost(post.id)">Delete</button>
-            <button class="edit-btn" style="background-color: lightgreen">Edit</button>
+            <button class="edit-btn" style="background-color: lightgreen" (click)="editPost(post)">Edit</button>
         </ng-template>
         <button class="com-btn">comment</button>
     </div>

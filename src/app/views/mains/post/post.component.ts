@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
 import { IPost } from 'src/app/models/ipost';
+import { IPostDetails } from 'src/app/models/ipost-details';
+import { PostDetailsService } from 'src/app/services/post-details-service/post-details.service';
 import { PostService } from 'src/app/services/post-service/post.service';
 
 @Component({
@@ -14,8 +16,12 @@ import { PostService } from 'src/app/services/post-service/post.service';
 export class PostComponent implements OnInit {
 
   public postForm: FormGroup;
+  public post: IPostDetails;
+  private isEdit: boolean;
 
-  constructor(private fb: FormBuilder, private postService: PostService, private router: Router) { }
+  constructor(private fb: FormBuilder, 
+    private postService: PostService, 
+    private router: Router) { }
 
   ngOnInit(): void {
 
@@ -35,13 +41,13 @@ export class PostComponent implements OnInit {
         }
       ]
       });
+
+      
   }
 
   getTitle(){return this.postForm.get('title').value;};
   getTextField(){return this.postForm.get('textField').value;};
 
-
-  // TODO: need to fix the date so that it wont be undefined 
   submitPost(){
     const post: IPost = {
       userId: JSON.parse(sessionStorage.getItem("userDetails")).id,

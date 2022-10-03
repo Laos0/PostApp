@@ -2,7 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiEndPoints } from 'src/app/libs/apiPaths';
+import { ConsoleColor } from 'src/app/libs/console-color';
 import { IPost } from 'src/app/models/ipost';
+import { IPostDetails } from 'src/app/models/ipost-details';
+import { IPostEdit } from 'src/app/models/ipost-edit';
 import { User } from 'src/app/models/user';
 import { ResponseCreateUser } from 'src/app/reponses/response-create-user';
 import { ResponseGetAllPosts } from 'src/app/reponses/response-get-all-posts';
@@ -39,5 +42,10 @@ export class PostService {
   deletePostById(postId: number): Observable<any>{
     console.log("<< post service: view count increase >>");
     return this.http.delete<any>(ApiEndPoints.DELETE_POST + postId + "/delete");
+  }
+
+  editPost(post: IPostEdit): Observable<any>{
+    console.log("<< post service: view count increase >>", ConsoleColor.YELLOW);
+    return this.http.put<any>(ApiEndPoints.EDIT_POST + post.id + "/edit", post, this.httpOptions);
   }
 }
