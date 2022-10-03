@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { take, timeout } from 'rxjs';
-import { IPost } from 'src/app/models/ipost';
+import { AppRoutes } from 'src/app/app-routes';
 import { IPostDetails } from 'src/app/models/ipost-details';
 import { IUser } from 'src/app/models/iuser';
+import { DialogService } from 'src/app/services/dialog-service/dialog.service';
 import { PostDetailsService } from 'src/app/services/post-details-service/post-details.service';
 import { PostService } from 'src/app/services/post-service/post.service';
 import { UserService } from 'src/app/services/user-service/user.service';
+
+
 
 @Component({
   selector: 'app-post-details',
@@ -21,7 +25,9 @@ export class PostDetailsComponent implements OnInit {
 
   constructor(private postDetailsService: PostDetailsService, 
     private userService: UserService,
-    private postService: PostService) { }
+    private postService: PostService,
+    private dialog: DialogService,
+    private router: Router) { }
 
   ngOnInit(): void {
 
@@ -79,14 +85,26 @@ export class PostDetailsComponent implements OnInit {
     console.log("getUserPostDetails");
   }
 
-  // TODO: Implement delete function when delete button is clicked
-  // Make sure to subscribe to the function
   deletePost(id: number){
-    // TODO: Show a popup modal and see if user wants to confirm delete before executing next line
-    
-    this.postService.deletePostById(id).pipe(take(1), timeout(10000)).subscribe();
 
-    //TODO: After deleting the post, redirect them back to home component
+    let confirmation = this.dialog.confirmDialog({
+      message: "Are you sure you want to delete this post?",
+      confirmText: "Yes",
+      cancelText: "No"
+    }).subscribe((data) => {
+      // if user clicked yes then proceed to delete the post
+      if(data === true){
+        this.postService.deletePostById(id).pipe(take(1), timeout(10000)).subscribe(() => {
+          // once the post is deleted we will route them back to the home page
+          this.router.navigate([AppRoutes.HOME]);
+        });
+      }
+    });
+
+  }
+
+  // TODO: Finish implementation of editPost
+  editPost(id: number){
 
   }
 

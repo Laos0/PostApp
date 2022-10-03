@@ -15,6 +15,9 @@ import { ErrorComponent } from './views/errorViews/error/error.component';
 import { CommonModule } from '@angular/common';
 import { PostComponent } from './views/mains/post/post.component';
 import { PostDetailsComponent } from './views/mains/post-details/post-details.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from "@angular/material/dialog";
+import { ComfirmDeleteComponent } from './views/dialogs/comfirm-delete/comfirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { PostDetailsComponent } from './views/mains/post-details/post-details.co
     HomeComponent,
     ErrorComponent,
     PostComponent,
-    PostDetailsComponent
+    PostDetailsComponent,
+    ComfirmDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,9 @@ import { PostDetailsComponent } from './views/mains/post-details/post-details.co
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
