@@ -1,3 +1,7 @@
 <div class="header">
     <h1>Post</h1>
+    
+    <ng-template [ngIf]="isLoggedIn">
+        <h3><a href="#" id="logout" (click)="logout()">logout</a></h3>
+    </ng-template>
 </div>

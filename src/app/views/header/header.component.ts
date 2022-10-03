@@ -7,9 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  public isLoggedIn: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
+
+    if(sessionStorage.getItem('userDetails')){
+      this.isLoggedIn = true;
+    }else{
+      this.isLoggedIn = false;
+    }
+  }
+
+  logout(){
+    sessionStorage.clear();
+    window.location.reload(); // refresh the page so that logout will display
   }
 
 }
