@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
+import { map, take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
 import { ResponseLogin } from 'src/app/reponses/response-login';
 import { AuthService } from 'src/app/services/auth-service/auth-service';
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.authService.login(this.email, this.password)
+    this.authService.login(this.email, this.password).pipe(take(1), timeout(10000))
     // .pipe(map((res: ResponseLogin) => {
     //   //const r = JSON.stringify(res);
     //   //const d = JSON.parse(r);

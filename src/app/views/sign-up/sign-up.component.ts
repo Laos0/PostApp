@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
 import { IUser } from 'src/app/models/iuser';
 import { User } from 'src/app/models/user';
@@ -76,7 +77,7 @@ export class SignUpComponent implements OnInit {
     */
 
     // call the user service to create a new user to send to the backend
-    this.userService.createUser(user).subscribe({
+    this.userService.createUser(user).pipe(take(1), timeout(10000)).subscribe({
       next: (result: ResponseCreateUser) => {
 
         // if the response json from backend returns a true value for isCreated Then do this

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
 import { IPost } from 'src/app/models/ipost';
 import { PostService } from 'src/app/services/post-service/post.service';
@@ -52,7 +53,7 @@ export class PostComponent implements OnInit {
     // console.log("<<  psotr component >>", JSON.parse(sessionStorage.getItem("userDetails")).id)
 
     // if you want http to fire, you must SUBSCRIBE
-    this.postService.createPost(post).subscribe({
+    this.postService.createPost(post).pipe(take(1), timeout(10000)).subscribe({
       next: (res: any) => {
 
         console.log("<< post components >>", res);

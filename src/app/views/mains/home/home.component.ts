@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs';
+import { first, take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
 import { IPost } from 'src/app/models/ipost';
 import { IPostDetails } from 'src/app/models/ipost-details';
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
   }
 
   getAllPosts(){
-    this.postService.getAllPosts().subscribe({
+    this.postService.getAllPosts().pipe(take(1), timeout(10000)).subscribe({
       // I have to use dataType any, otherwise I wont be able
       // to extract the createdDate as my IPost does not have it declared in the beginnning
       next: (res: any) => {
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit {
         views: post.views,
         date: post.createdDate
     }
-    this.postService.addViewCount(postDetails).subscribe();
+    this.postService.addViewCount(postDetails).pipe(take(1), timeout(10000)).subscribe();
 
     // this.router.navigate([AppRoutes.POST_DETAILS], {relativeTo: this.activatedRoute})
     this.router.navigate([AppRoutes.POST_DETAILS]);
