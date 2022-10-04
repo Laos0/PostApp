@@ -32,11 +32,12 @@
                     <div class="comments-form-title"></div>
 
                     COMMENT FORM
-                    <form class="comment-form">
+                    <form class="comment-form" [formGroup]=commentForm (ngSubmit)=submitCommentForm()>
                         <mat-form-field class="comment-full-width" appearance="fill">
                           <mat-label>Leave a comment</mat-label>
-                          <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+                          <textarea formControlName=comment matInput placeholder="Add a comment..."></textarea>
                         </mat-form-field>
+                        <button class="comment-btn">Comment</button>
                       </form>
 
 
@@ -71,4 +72,11 @@
 
 <ng-template #showNoComments>
     <span>No comments</span>
+    <form class="comment-form" [formGroup]=commentForm (ngSubmit)=submitCommentForm()>
+        <mat-form-field class="comment-full-width" appearance="fill">
+          <mat-label>Leave a comment</mat-label>
+          <textarea formControlName=comment matInput placeholder="Add a comment..."></textarea>
+        </mat-form-field>
+        <button class="comment-btn">Comment</button>
+      </form>
 </ng-template>

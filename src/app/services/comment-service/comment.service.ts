@@ -25,6 +25,10 @@ export class CommentService {
     return this.http.post<IComment[]>(ApiEndPoints.GET_COMMENTS + post.id + "/comment", post, this.httpOptions);
   }
 
+  addComment(comment: IComment): Observable<any>{
+    return this.http.post<any>(ApiEndPoints.GET_COMMENTS + comment.postId + "/comments/new", comment, this.httpOptions);
+  }
+
   // We need to pass data from Home component to PostDetails component
   // to achieve that we need to introduce Subject and Observable 
   // this method will be caleld in the Home Component

@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/user-service/user.service';
 import { CommentService } from 'src/app/services/comment-service/comment.service';
 import { CommentUser } from 'src/app/models/comment-user';
 import { Subject } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 
@@ -28,6 +29,9 @@ export class PostDetailsComponent implements OnInit {
   public isUserPost: boolean = false;
   private sessionUser: any;
   public comments: IComment[];
+
+  // comment form
+  public commentForm: FormGroup;
 
   public _onPostReturned = new ReplaySubject<void>(1);
   public onPostReturned$ = this._onPostReturned.asObservable();
@@ -47,11 +51,21 @@ export class PostDetailsComponent implements OnInit {
     private dialog: DialogService,
     private router: Router,
     private commentService: CommentService,
-    private changeRef: ChangeDetectorRef) { }
+    private changeRef: ChangeDetectorRef,
+    private fb: FormBuilder) { }
 
     ngOnInit(): void {
-      
       this.sessionUser = JSON.parse(sessionStorage.getItem("userDetails"));
+
+      this.commentForm = this.fb.group({
+        comment: [
+          '',
+          {
+            validators: [Validators.required],
+            updateOn: 'blur',
+          },
+        ]
+      });
       
       this.postDetailsService.onSelectPost$.pipe(take(1)).subscribe((data) => {
         
@@ -82,7 +96,6 @@ export class PostDetailsComponent implements OnInit {
           if(res && res.length > 0){
             this.comments = res;
             //console.log(this.comments);
-            console.log("COMMENT")
             this._onCommentReturned.next(true);
           }else{
             this._onCommentReturned.next(false);
@@ -168,10 +181,32 @@ export class PostDetailsComponent implements OnInit {
 
 
 
-  commentPost(){
+  // -------------------  All related comment functionality --------------------
+  getComment() {return this.commentForm.get('comment').value;}
+  submitCommentForm(){
 
+    let comment: IComment = {
+      userId: JSON.parse(sessionStorage.getItem('userDetails')).id,
+      postId: this.post.id,
+      text: this.getComment()
+    }
 
+    this.commentService.addComment(comment).pipe(take(1)).subscribe({
+      next: (res) => {
+        console.log("%c << COMMENT >> ", res)
+        this.changeRef.detectChanges();
+      },
+      error: (e) => {
+
+      },
+      complete: () => {
+        this.changeRef.detectChanges();
+      }
+    });
+
+    console.log(comment);
   }
+
 
 }
 
