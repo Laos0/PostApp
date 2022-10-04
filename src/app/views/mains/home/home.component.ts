@@ -56,6 +56,9 @@ export class HomeComponent implements OnInit {
       // to extract the createdDate as my IPost does not have it declared in the beginnning
       next: (res: any) => {
         this.posts = res;
+
+        // TODO: Sort the posts by date latest at the top and oldest at the bottm 
+
         //console.log("<< home component: Get post >>", res)
         this.changeRef.detectChanges();
         //console.log("next")
@@ -103,9 +106,9 @@ export class HomeComponent implements OnInit {
     //console.log("CLICKED", post.createdDate);
   }
 
-  convertDate(date: string){
-    let datePipe = new DatePipe(date);
-    return datePipe;
+  extractDate(dateTime: string){
+    let date = dateTime.slice(0, -14);
+    return date;
   }
 
 }

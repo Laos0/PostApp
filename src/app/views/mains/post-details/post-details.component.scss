@@ -1,13 +1,44 @@
 .container {
     text-align: left;
     .commentSection{
-        background-color: gray;
         padding: 2em;
         margin: 1em;
         
+        .comments{
+            .comment-content{
+               display: flex;
+
+               .comment-text{
+                    margin: .5em;  
+               }
+            }
+
+            .comment-bottom-part{
+                .reply-btn{
+                    padding-left: 5em;
+                    background: none;
+                    border: none;
+                }
+
+                .reply-btn:hover{
+                    cursor: pointer;
+                }
+            }
+        }
     }
-    .userInfo {
-        float: right;
-    }
-   
+
+}
+
+img{
+    border-radius: 50%;
+}
+
+.comment-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+  
+.comment-full-width {
+    width: 100%;
 }

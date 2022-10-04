@@ -17,6 +17,8 @@ import { PostComponent } from './views/mains/post/post.component';
 import { PostDetailsComponent } from './views/mains/post-details/post-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 import { ComfirmDeleteComponent } from './views/dialogs/comfirm-delete/comfirm-delete.component';
 import { EditPostComponent } from './views/mains/edit-post/edit-post.component';
 
@@ -43,6 +45,8 @@ import { EditPostComponent } from './views/mains/edit-post/edit-post.component';
     ReactiveFormsModule,
     AppRoutingModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
     BrowserAnimationsModule
   ],
   providers: [],

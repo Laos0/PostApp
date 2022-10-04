@@ -155,6 +155,11 @@ export class PostDetailsComponent implements OnInit {
 
   }
 
+  extractDate(dateTime: string){
+    let date = dateTime.slice(0, -14);
+    return date;
+  }
+
   editPost(post: IPostDetails){
     this.postDetailsService.onSelectPost(post);
     this.router.navigate([AppRoutes.POST_EDIT]);
