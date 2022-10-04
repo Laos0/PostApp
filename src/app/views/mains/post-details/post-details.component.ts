@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { take, timeout } from 'rxjs';
+import { ReplaySubject, take, takeUntil, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
 import { ConsoleColor } from 'src/app/libs/console-color';
 import { IPostDetails } from 'src/app/models/ipost-details';
 import { IUser } from 'src/app/models/iuser';
+import { IComment } from 'src/app/models/icomment';
 import { DialogService } from 'src/app/services/dialog-service/dialog.service';
 import { PostDetailsService } from 'src/app/services/post-details-service/post-details.service';
 import { PostService } from 'src/app/services/post-service/post.service';
 import { UserService } from 'src/app/services/user-service/user.service';
+import { CommentService } from 'src/app/services/comment-service/comment.service';
+import { CommentUser } from 'src/app/models/comment-user';
+import { Subject } from 'rxjs';
 
 
 
@@ -23,41 +27,83 @@ export class PostDetailsComponent implements OnInit {
   public userDetails: IUser;
   public isUserPost: boolean = false;
   private sessionUser: any;
+  public comments: IComment[];
+
+  public _onPostReturned = new ReplaySubject<void>(1);
+  public onPostReturned$ = this._onPostReturned.asObservable();
+
+  public _onCommentReturned = new ReplaySubject<boolean>(1);
+  public onCommentReturned$ = this._onCommentReturned.asObservable();
+  
+  public _allDataReady = new ReplaySubject<boolean>(1);
+  public onUserDetailsReturned$ = this._allDataReady.asObservable();
+
+  public _onGetUserPostDetails = new ReplaySubject<boolean>(1);
+  public onGetUserPostDetails$ = this._onGetUserPostDetails.asObservable();
 
   constructor(private postDetailsService: PostDetailsService, 
     private userService: UserService,
     private postService: PostService,
     private dialog: DialogService,
-    private router: Router) { }
+    private router: Router,
+    private commentService: CommentService,
+    private changeRef: ChangeDetectorRef) { }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
+      
+      this.sessionUser = JSON.parse(sessionStorage.getItem("userDetails"));
+      
+      this.postDetailsService.onSelectPost$.pipe(take(1)).subscribe((data) => {
+        
+        this.post = {
+          id: data.id,
+          userId: data.userId,
+          title: data.title,
+          text: data.text,
+          views: data.views,
+          date: data.createdDate
+        };
+        
+        
+        console.log("<< Selected Post >>", this.post.date)
+        this._onPostReturned.next();
+        
+        // TODO: When we press refresh we lose all its post details, we must store it in session
+        // sessionStorage.setItem("post", JSON.stringify(this.post));
+      });
+      
+      this.onPostReturned$.pipe(take(1)).subscribe(() => {
+        console.log("Start of coment request");
+        
+        this.getUserPostDetails(this.post.userId);
 
-    this.sessionUser = JSON.parse(sessionStorage.getItem("userDetails"));
+        this.commentService.getAllCommentInPost(this.post).subscribe((res) => {
+          
+          if(res && res.length > 0){
+            this.comments = res;
+            //console.log(this.comments);
+            console.log("COMMENT")
+            this._onCommentReturned.next(true);
+          }else{
+            this._onCommentReturned.next(false);
+         
+          }
+          this.changeRef.detectChanges();
+        });
+      })
 
-    this.postDetailsService.onSelectPost$.subscribe((data) => {
-   
-      this.post = {
-        id: data.id,
-        userId: data.userId,
-        title: data.title,
-        text: data.text,
-        views: data.views,
-        date: data.createdDate,
-
-      };
+      // this.onCommentReturned$.pipe(take(1)).subscribe(() => {
+      
+      //   console.log("Last guy")
+      //   this._allDataReady.next(true);
+      //   this.changeRef.detectChanges();
+      // })
       
       
-      console.log("<< Selected Post >>", this.post.date)
-
-      // TODO: set in session so when refresh is clicked, we can load it
-      // sessionStorage.setItem("post", JSON.stringify(this.post));
-      this.getUserPostDetails(this.post.userId);
-    })
-
-    console.log("THE USER's SESSION ID",this.post.id);
+    //console.log("THE USER's SESSION ID",this.post.id);
     if(this.sessionUser.id === this.post.userId){
       this.isUserPost = true;
-      console.log("<< PostDetails component >> POST BELONGS TO SESSION USER")
+      //console.log("<< PostDetails component >> POST BELONGS TO SESSION USER")
 
     }
 
@@ -77,13 +123,18 @@ export class PostDetailsComponent implements OnInit {
             email: res.email,
             password: res.password
           }
-          console.log(this.userDetails);
+          this.changeRef.detectChanges();
+          //console.log(this.userDetails);
         },
         error (e){
           console.warn(e);
+        },
+        complete: () => {
+          this._onGetUserPostDetails.next(true);
+          this.changeRef.detectChanges();
         }
       });
-    console.log("getUserPostDetails");
+    //console.log("getUserPostDetails");
   }
 
   deletePost(id: number){
@@ -104,11 +155,17 @@ export class PostDetailsComponent implements OnInit {
 
   }
 
-  // TODO: Finish implementation of editPost
   editPost(post: IPostDetails){
     this.postDetailsService.onSelectPost(post);
     this.router.navigate([AppRoutes.POST_EDIT]);
     console.log("%c Editing post " + post.id, ConsoleColor.GREEN);
+  }
+
+
+
+  commentPost(){
+
+
   }
 
 }

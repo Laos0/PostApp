@@ -1,35 +1,49 @@
-<div class="container">
+
+    <div class="container">
+        <ng-container *ngIf="(onGetUserPostDetails$ | async)">
+        
+        <div class="postDetailSection">
+            <h2 class="title">{{post.title}}</h2>
+            <!-- TODO: userDetails.firstName and userDetails.lastName are giving errors Even though it works -->
+            <span class="userInfo">Posted by: {{userDetails.firstName}} {{userDetails.lastName}} </span>
+            <p class="textField">{{post.text}}</p>
+            <br>
+            <span class="date">Created: {{post.date}}</span>
+            <br>
+            <span class="views">Views: {{post.views}}</span>
+            <br>
+
+            <ng-template [ngIf]="isUserPost">
+                <button class="dlt-btn" style="background-color: red" (click)="deletePost(post.id)">Delete</button>
+                <button class="edit-btn" style="background-color: lightgreen" (click)="editPost(post)">Edit</button>
+            </ng-template>
+            <button class="com-btn" (click)="commentPost()">comment</button>
+        </div>
     
-    <div class="postDetailSection">
-        <h2 class="title">{{post.title}}</h2>
-        <!-- TODO: userDetails.firstName and userDetails.lastName are giving errors Even though it works -->
-        <span class="userInfo">Posted by: {{userDetails.firstName}} {{userDetails.lastName}} </span>
-        <p class="textField">{{post.text}}</p>
-        <br>
-        <span class="date">Created: {{post.date}}</span>
-        <br>
-        <span class="views">Views: {{post.views}}</span>
-        <br>
+    </ng-container>
 
-        <ng-template [ngIf]="isUserPost">
-            <button class="dlt-btn" style="background-color: red" (click)="deletePost(post.id)">Delete</button>
-            <button class="edit-btn" style="background-color: lightgreen" (click)="editPost(post)">Edit</button>
-        </ng-template>
-        <button class="com-btn">comment</button>
-    </div>
 
-    <div class="commentSection">
+    <ng-container *ngIf="(onCommentReturned$ | async); else showNoComments">
 
-        <!-- TODO: Need Input section when users click on comment button,
-            This is only Visible when comment button is pressed-->
+        <div class="commentSection">
+    
+            <!-- TODO: Need Input section when users click on comment button,
+                This is only Visible when comment button is pressed-->
+    
+            <ul>
+                <!-- TODO: *ngFor all comments related to this post-->
+                <li *ngFor="let comment of comments">
+                    <span>{{comment.userName}}</span>
+                    <p>{{comment.text}}</p>
+                    <button>Reply</button>
+                </li>
+                
+            </ul>
+        </div>
+    </ng-container>
 
-        <ul>
-            <!-- TODO: *ngFor all comments related to this post-->
-            <li>
-                <span>Tom Banks</span>
-                <p>Oh yeah, yes god created....</p>
-            </li>
-            <button>Reply</button>
-        </ul>
-    </div>
 </div>
+
+<ng-template #showNoComments>
+    <span>No comments</span>
+</ng-template>

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first, take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit {
 
   constructor(private router: Router, private postService: PostService, 
     private postDetailsService: PostDetailsService, private activatedRoute: ActivatedRoute,
-    private userService: UserService) { }
+    private userService: UserService,
+    private changeRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.firstName = JSON.parse(sessionStorage.getItem("userDetails")).firstName;
@@ -39,13 +40,13 @@ export class HomeComponent implements OnInit {
       email: user.email,
       password: user.password
     }
-    console.log("<<  home component >>", user)
+    //console.log("<<  home component >>", user)
     this.getAllPosts();
   }
 
   testMethod(val: boolean): void{
     if(val){
-      console.log(val);
+      //console.log(val);
     }else{console.warn("val is false")};
   }
 
@@ -55,10 +56,16 @@ export class HomeComponent implements OnInit {
       // to extract the createdDate as my IPost does not have it declared in the beginnning
       next: (res: any) => {
         this.posts = res;
-        console.log("<< home component: Get post >>", res)
+        //console.log("<< home component: Get post >>", res)
+        this.changeRef.detectChanges();
+        //console.log("next")
       },
       error: (e) => {
         console.error(e);
+      },
+      complete: () => {
+        //console.log("complete")
+        //this.changeRef.markForCheck();
       }
     });
   }
@@ -89,7 +96,7 @@ export class HomeComponent implements OnInit {
         views: post.views,
         date: post.createdDate
     }
-    this.postService.addViewCount(postDetails).pipe(take(1), timeout(10000)).subscribe();
+    this.postService.addViewCount(postDetails).subscribe().unsubscribe();
 
     // this.router.navigate([AppRoutes.POST_DETAILS], {relativeTo: this.activatedRoute})
     this.router.navigate([AppRoutes.POST_DETAILS]);

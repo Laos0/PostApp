@@ -24,4 +24,7 @@ export class ApiEndPoints {
 
     public static readonly EDIT_POST: string = this.BASE_URL + this.TARGET_VERSION + 'posts/';
 
+    // for deleting: http://localhost:8080/posts/ + id + '/comment';
+    public static readonly GET_COMMENTS: string = this.BASE_URL + this.TARGET_VERSION + 'posts/';
+
 }

@@ -13,7 +13,7 @@ export class ComfirmDeleteComponent implements OnInit {
   
   constructor(@Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
   }
   
   deletePost(){

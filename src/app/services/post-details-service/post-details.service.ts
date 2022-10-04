@@ -6,8 +6,6 @@ import { Observable, ReplaySubject, Subject } from 'rxjs';
 })
 export class PostDetailsService {
 
-
-
   // when subject publishes, all listeners on the observable will react to 
   private _onSelectPost: ReplaySubject<any> = new ReplaySubject<any>(1);
   public onSelectPost$: Observable<any> = this._onSelectPost.asObservable();

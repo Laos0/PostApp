@@ -23,29 +23,29 @@ export class PostService {
 
   // sending request to the backend to create a post
   createPost(post: IPost): Observable<IPost>{
-    console.log(ApiEndPoints.USER_CREATE_POST);
+    //console.log(ApiEndPoints.USER_CREATE_POST);
 
     return this.http.post<IPost>(ApiEndPoints.USER_CREATE_POST, post, this.httpOptions);
   }
 
   // get all the posts and load it onto the screen
   getAllPosts(): Observable<IPost[]>{
-    console.log("<< post service: get all posts request >>");
+    //console.log("<< post service: get all posts request >>");
     return this.http.get<IPost[]>(ApiEndPoints.GET_POSTS);
   }
 
   addViewCount(post: any): Observable<any>{
-    console.log("<< post service: view count increase >>");
+    //console.log("<< post service: view count increase >>");
     return this.http.post<any>(ApiEndPoints.POST_ADD_VIEW_COUNT, post, this.httpOptions);
   }
 
   deletePostById(postId: number): Observable<any>{
-    console.log("<< post service: view count increase >>");
+    //console.log("<< post service: view count increase >>");
     return this.http.delete<any>(ApiEndPoints.DELETE_POST + postId + "/delete");
   }
 
   editPost(post: IPostEdit): Observable<any>{
-    console.log("<< post service: view count increase >>", ConsoleColor.YELLOW);
+    //console.log("<< post service: view count increase >>", ConsoleColor.YELLOW);
     return this.http.put<any>(ApiEndPoints.EDIT_POST + post.id + "/edit", post, this.httpOptions);
   }
 }

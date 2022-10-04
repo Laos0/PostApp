@@ -62,7 +62,7 @@ export class PostComponent implements OnInit {
     this.postService.createPost(post).pipe(take(1), timeout(10000)).subscribe({
       next: (res: any) => {
 
-        console.log("<< post components >>", res);
+        //console.log("<< post components >>", res);
         if(res === true){
           // if the response is true, redirect client to home component 
           // and add post into an array list?
@@ -74,6 +74,6 @@ export class PostComponent implements OnInit {
       }
     });
 
-    console.log("<< post component >>", post);
+    //console.log("<< post component >>", post);
   }
 }
