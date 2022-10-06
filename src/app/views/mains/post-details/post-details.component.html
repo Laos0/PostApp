@@ -1,21 +1,24 @@
 
     <div class="container">
+
         <ng-container *ngIf="(onGetUserPostDetails$ | async)">
         
         <div class="postDetailSection">
-            <h2 class="title">{{post.title}}</h2>
-            <!-- TODO: userDetails.firstName and userDetails.lastName are giving errors Even though it works -->
-            <span class="userInfo">Posted by: {{userDetails.firstName}} {{userDetails.lastName}} </span>
-            <p class="textField">{{post.text}}</p>
-            <span class="date">Created: {{extractDate(post.date)}}</span>
-            <br>
-            <span class="views">Views: {{post.views}}</span>
-            <br>
+            <div class="post-content">
 
-            <ng-template [ngIf]="isUserPost">
-                <button class="dlt-btn" style="background-color: red" (click)="deletePost(post.id)">Delete</button>
-                <button class="edit-btn" style="background-color: lightgreen" (click)="editPost(post)">Edit</button>
-            </ng-template>
+                <span class="date">Created: {{extractDate(post.date)}}</span>
+                <span class="userInfo">Posted by: {{userDetails.firstName}} {{userDetails.lastName}} </span>
+                <h2 class="title">{{post.title}}</h2>
+                <p class="textField">{{post.text}}</p>
+                <br>
+                <span class="views">Views: {{post.views}}</span>
+                <br>
+    
+                <ng-template [ngIf]="isUserPost">
+                    <button class="dlt-btn" style="background-color: red" (click)="deletePost(post.id)">Delete</button>
+                    <button class="edit-btn" style="background-color: lightgreen" (click)="editPost(post)">Edit</button>
+                </ng-template>
+            </div>
 
         </div>
     
@@ -31,38 +34,43 @@
                     <h3 class="comments-title">Comments</h3>
                     <div class="comments-form-title"></div>
 
-                    COMMENT FORM
                     <form class="comment-form" [formGroup]=commentForm (ngSubmit)=submitCommentForm()>
                         <mat-form-field class="comment-full-width" appearance="fill">
                           <mat-label>Leave a comment</mat-label>
                           <textarea formControlName=comment matInput placeholder="Add a comment..."></textarea>
                         </mat-form-field>
-                        <button class="comment-btn">Comment</button>
+                        <button type="button" class="comment-btn" (click)="submitCommentForm()">Comment</button>
                       </form>
 
 
-                    <div *ngFor="let comment of comments">
+                    <div class="comment-container">
 
-                        <div class="comment-content">
-
-                            <div class="comment-img-container">
-                                <img src="assets/user-icon.png"/>
+                        <div *ngFor="let comment of comments">
+    
+                            <div class="comment-content">
+    
+                                <div class="comment-img-container">
+                                    <img src="assets/user-icon.png"/>
+                                </div>
+        
+                                <div class="comment-right-part">
+                                    <div class="comment-user">{{comment.userName}}</div>
+                                    <div class="commet-text">{{comment.text}}</div>
+                                </div>
+    
                             </div>
     
-                            <div class="comment-right-part">
-                                <div class="comment-user">{{comment.userName}}</div>
-                                <div class="commet-text">{{comment.text}}</div>
+                            <!-- TODO: Implement reply button in the future-->
+                        <!--
+                            <div class="comment-bottom-part">
+                                <button class="reply-btn" (click)="reply()">Reply</button>
                             </div>
-
-                        </div>
-
-                        <div class="comment-bottom-part">
-                            <button class="reply-btn">Reply</button>
-                        </div>
+                        -->
                         <br>
+                    </div>  
+                    
                     </div>
                 </div>
-
         </div>
 
     </ng-container>
@@ -71,11 +79,21 @@
 </div>
 
 <ng-template #showNoComments>
-    <span>No comments</span>
+    <span>No Comments</span>
     <form class="comment-form" [formGroup]=commentForm (ngSubmit)=submitCommentForm()>
         <mat-form-field class="comment-full-width" appearance="fill">
           <mat-label>Leave a comment</mat-label>
           <textarea formControlName=comment matInput placeholder="Add a comment..."></textarea>
+        </mat-form-field>
+        <button class="comment-btn">Comment</button>
+      </form>
+</ng-template>
+
+<ng-template #replyComment>
+    <form class="reply-comment-form" [formGroup]=replyCommentForm (ngSubmit)=submitReplyCommentForm()>
+        <mat-form-field class="comment-full-width" appearance="fill">
+          <mat-label>Leave a comment</mat-label>
+          <textarea formControlName=replyComment matInput placeholder="Add a reply comment..."></textarea>
         </mat-form-field>
         <button class="comment-btn">Comment</button>
       </form>

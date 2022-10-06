@@ -1,11 +1,11 @@
 <div class="container">
-    <h2>WELCOME, {{firstName}}</h2>
+    <h2>Hello, {{firstName}}</h2>
     <button (click)="post()">Add A Post</button>
-
-    <ul class="postContainer">
-        <li class="selectableList" *ngFor="let post of posts" (click)="getPostDetails(post)">
+    <div class="postContainer">
+        <div class="selectableList" *ngFor="let post of posts" (click)="getPostDetails(post)">
             <span>{{post.title}}</span>
             <span class="createdDate">{{extractDate(post.createdDate)}}</span>
-        </li>
-    </ul>
+            <span class="userName">Post by {{post.first_name}} {{post.last_name}}</span>
+        </div>
+    </div>
 </div>

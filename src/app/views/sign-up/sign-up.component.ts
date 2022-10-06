@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
+import { ConsoleColor } from 'src/app/libs/console-color';
 import { IUser } from 'src/app/models/iuser';
 import { User } from 'src/app/models/user';
 import { ResponseCreateUser } from 'src/app/reponses/response-create-user';
@@ -80,6 +81,8 @@ export class SignUpComponent implements OnInit {
     this.userService.createUser(user).pipe(take(1), timeout(10000)).subscribe({
       next: (result: ResponseCreateUser) => {
 
+        console.log("%c email already exist", result);
+
         // if the response json from backend returns a true value for isCreated Then do this
         if(result.isCreated){
           // if succesful creation, take user to Home component and say its name
@@ -90,6 +93,7 @@ export class SignUpComponent implements OnInit {
           console.log("<<  THIS IS THE NEW USER >>: ", result);
         }else{
           // Tell the user that an email with it exists already
+          console.log("%c email already exist", ConsoleColor.RED);
 
         }
 

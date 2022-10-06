@@ -99,11 +99,11 @@ export class HomeComponent implements OnInit {
         views: post.views,
         date: post.createdDate
     }
-    this.postService.addViewCount(postDetails).subscribe().unsubscribe();
+    this.postService.addViewCount(postDetails).pipe(take(1)).subscribe();
 
     // this.router.navigate([AppRoutes.POST_DETAILS], {relativeTo: this.activatedRoute})
     this.router.navigate([AppRoutes.POST_DETAILS]);
-    //console.log("CLICKED", post.createdDate);
+    console.log("CLICKED", post.createdDate);
   }
 
   extractDate(dateTime: string){

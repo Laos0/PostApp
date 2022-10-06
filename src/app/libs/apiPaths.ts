@@ -27,7 +27,7 @@ export class ApiEndPoints {
     // for deleting: http://localhost:8080/posts/ + id + '/comment';
     public static readonly GET_COMMENTS: string = this.BASE_URL + this.TARGET_VERSION + 'posts/';
 
-    // for commenting: http://localhost:8080/posts/ + id + '/comments/new';
+    // for commenting: http://localhost:8080/posts/ + postId + '/comments/new';
     public static readonly ADD_COMMENT: string = this.BASE_URL + this.TARGET_VERSION + 'posts/';
 
 }

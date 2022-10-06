@@ -1,15 +1,46 @@
 .container {
     text-align: left;
+    background-color: tan;
+    padding: 10px;
+    .postDetailSection{
+        background-color: #DAB785;
+        border: thin solid black;
+        margin: .5em;
+        .userInfo{
+            font-size: 10px;
+        }
+        .post-content{
+            margin: 1.5em;
+            position: relative;
+            .views{
+                position:absolute;
+                bottom:0;
+                right:0;
+                font-size: 10px;
+            }
+            .date{
+                position:absolute;
+                top:0;
+                right:0;
+                font-size: 10px;
+            }
+        }
+    }
+
     .commentSection{
         padding: 2em;
-        margin: 1em;
+        margin: .5em;
         
         .comments{
             .comment-content{
                display: flex;
-
+                
                .comment-text{
                     margin: .5em;  
+               }
+
+               .comment-user{
+                font-weight: 500;
                }
             }
 
@@ -31,6 +62,7 @@
 
 img{
     border-radius: 50%;
+    margin-right: 10px;
 }
 
 .comment-form {
@@ -45,4 +77,8 @@ img{
 
 .comment-btn{
     float: right;
+}
+
+.comment-container{
+    margin-top: 30px;
 }

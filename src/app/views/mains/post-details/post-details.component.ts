@@ -33,6 +33,10 @@ export class PostDetailsComponent implements OnInit {
   // comment form
   public commentForm: FormGroup;
 
+  // reply comment form
+  public replyCommentForm: FormGroup;
+  public isReply: boolean = false;
+
   public _onPostReturned = new ReplaySubject<void>(1);
   public onPostReturned$ = this._onPostReturned.asObservable();
 
@@ -59,6 +63,16 @@ export class PostDetailsComponent implements OnInit {
 
       this.commentForm = this.fb.group({
         comment: [
+          '',
+          {
+            validators: [Validators.required],
+            updateOn: 'blur',
+          },
+        ]
+      });
+
+      this.replyCommentForm = this.fb.group({
+        replyComment: [
           '',
           {
             validators: [Validators.required],
@@ -182,7 +196,11 @@ export class PostDetailsComponent implements OnInit {
 
 
   // -------------------  All related comment functionality --------------------
+
+  // get the text from the comment box
   getComment() {return this.commentForm.get('comment').value;}
+
+  // comment button will call this button
   submitCommentForm(){
 
     let comment: IComment = {
@@ -190,21 +208,34 @@ export class PostDetailsComponent implements OnInit {
       postId: this.post.id,
       text: this.getComment()
     }
+    
 
+    // TODO: NEED TO RERENDER THE COMPONENT after comment is submitted
     this.commentService.addComment(comment).pipe(take(1)).subscribe({
       next: (res) => {
         console.log("%c << COMMENT >> ", res)
-        this.changeRef.detectChanges();
+        this.ngOnInit();
       },
       error: (e) => {
 
       },
       complete: () => {
-        this.changeRef.detectChanges();
+      
       }
     });
 
+    this.commentForm.dirty;
     console.log(comment);
+  }
+
+  // when reply is clicked
+  reply(){
+    console.log("%c Clicking reply", ConsoleColor.GREEN);
+    this.isReply = true;
+  }
+
+  submitReplyCommentForm(){
+    
   }
 
 

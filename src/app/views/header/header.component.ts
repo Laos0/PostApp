@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   public isLoggedIn: boolean = false;
-  constructor() { }
+  
+  constructor(private changeRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-
+    this.changeRef.detectChanges();
     if(sessionStorage.getItem('userDetails')){
       this.isLoggedIn = true;
     }else{

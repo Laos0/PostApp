@@ -5,4 +5,5 @@ export interface IPostDetails {
     text: string;
     views: number;
     date: string;
+    userName?: string;
 }
