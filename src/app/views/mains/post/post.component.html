@@ -6,10 +6,11 @@
             <input id="title" class="form-control" formControlName=title
             type="title"  maxlength="100" placeholder="Title...">
             <br>
-            <input type="textarea" class="form-control" formControlName=textField placeholder="text...">
+            <textarea id="text" type="textarea" class="form-control" formControlName=textField placeholder="text..."></textarea>
             <br>
 
-            <button>Submit</button>
+            <button class="submit-btn">Submit</button>
+            <button type="button" class="cancel-btn" (click)="cancelPost()">Cancel</button>
             
         </form>
 

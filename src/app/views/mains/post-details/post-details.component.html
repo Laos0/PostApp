@@ -15,7 +15,7 @@
                 <br>
     
                 <ng-template [ngIf]="isUserPost">
-                    <button class="dlt-btn" style="background-color: red" (click)="deletePost(post.id)">Delete</button>
+                    <button class="dlt-btn" style="background-color: red; margin-right: .4em;" (click)="deletePost(post.id)">Delete</button>
                     <button class="edit-btn" style="background-color: lightgreen" (click)="editPost(post)">Edit</button>
                 </ng-template>
             </div>

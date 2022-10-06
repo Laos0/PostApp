@@ -76,4 +76,8 @@ export class PostComponent implements OnInit {
 
     //console.log("<< post component >>", post);
   }
+
+  cancelPost(){
+    this.router.navigate([AppRoutes.HOME]);
+  }
 }

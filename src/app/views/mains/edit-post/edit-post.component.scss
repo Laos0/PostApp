@@ -2,6 +2,19 @@
     text-align: center;
     background-color: tan;
     padding: 50px;
-    
+    #title{
+        width: 40em;
+        margin-bottom: .5em;
+    }
+    #text{
+        width: 40em;
+        height: 10em;
+    }
+    .cancel-btn{
+        background-color: red;
+    }
+    .submit-btn{
+        margin-right: .5em;
+    }
 
 }

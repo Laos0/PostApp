@@ -94,4 +94,8 @@ export class EditPostComponent implements OnInit {
     console.log("<< Edit post component >>", editPost, ConsoleColor.YELLOW);
   }
 
+  cancelPost(){
+    this.router.navigate([AppRoutes.HOME]);
+  }
+
 }
