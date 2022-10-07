@@ -77,6 +77,7 @@ export class LoginComponent implements OnInit {
             }else{
                 // if the email does not exist
                 this.incorrectEmail = true;
+                this.incorrectPassword = false;
                 console.log("%c << Login Component >> Email does not exist", ConsoleColor.RED)
             }
           }else{
