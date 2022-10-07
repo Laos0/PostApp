@@ -1,10 +1,23 @@
 <div class="container">
     <h2>Hello, {{firstName}}</h2>
     <button (click)="post()">Add A Post</button>
+    <mat-form-field appearance="fill">
+        <mat-label>Filter</mat-label>
+        <!-- When selecting a filter, we will call selectedFilter and filter posts based on it -->
+        <mat-select [(value)]="selected" (valueChange)="selectedFilter(selected)">
+          <mat-option value="none">None</mat-option>
+          <mat-option value="userPosts">Your Posts</mat-option>
+          <mat-option value="mostViews">Most Views</mat-option>
+          <mat-option value="leastViews">Least Views</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+
     <div class="postContainer">
-        <div class="selectableList" *ngFor="let post of posts" (click)="getPostDetails(post)">
+        <div class="selectableList" *ngFor="let post of filterPosts" (click)="getPostDetails(post)">
             <span>{{post.title}}</span>
-            <span class="createdDate">{{extractDate(post.createdDate)}}</span>
+            <span class="createdDate">{{extractDate(post.createdDate)}} <span class="views">Views: {{post.views}}</span></span>
+            
             <span class="userName">Post by {{post.first_name}} {{post.last_name}}</span>
         </div>
     </div>

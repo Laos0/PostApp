@@ -21,6 +21,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { ComfirmDeleteComponent } from './views/dialogs/comfirm-delete/comfirm-delete.component';
 import { EditPostComponent } from './views/mains/edit-post/edit-post.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { EditPostComponent } from './views/mains/edit-post/edit-post.component';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     BrowserAnimationsModule
   ],
   providers: [],

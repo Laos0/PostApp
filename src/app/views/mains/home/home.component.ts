@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first, take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
@@ -10,6 +11,7 @@ import { ResponseGetAllPosts } from 'src/app/reponses/response-get-all-posts';
 import { PostDetailsService } from 'src/app/services/post-details-service/post-details.service';
 import { PostService } from 'src/app/services/post-service/post.service';
 import { UserService } from 'src/app/services/user-service/user.service';
+import { PostComponent } from '../post/post.component';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +23,11 @@ export class HomeComponent implements OnInit {
   // the current user's information
   public userDetails: IUser;
 
+  // selecting the filter options
+  public selected: string;
+  public filterOptions: string[] = ['none', 'userPosts', 'mostViews', 'leastViews'];
+  public filterPosts: any[];
+
   // The post information
   public firstName: string;
   public posts: any[];
@@ -28,11 +35,13 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private postService: PostService, 
     private postDetailsService: PostDetailsService, private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private changeRef: ChangeDetectorRef) { }
+    private changeRef: ChangeDetectorRef,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.firstName = JSON.parse(sessionStorage.getItem("userDetails")).firstName;
     const user = JSON.parse(sessionStorage.getItem("userDetails"));
+
     this.userDetails = {
       id: user.id,
       firstName: user.firstName,
@@ -40,6 +49,7 @@ export class HomeComponent implements OnInit {
       email: user.email,
       password: user.password
     }
+
     //console.log("<<  home component >>", user)
     this.getAllPosts();
   }
@@ -55,8 +65,9 @@ export class HomeComponent implements OnInit {
       // I have to use dataType any, otherwise I wont be able
       // to extract the createdDate as my IPost does not have it declared in the beginnning
       next: (res: any) => {
+        console.log("<< THE POSTS DETAILS >>", res)
         this.posts = res;
-
+        this.filterPosts = this.posts;
         // TODO: Sort the posts by date latest at the top and oldest at the bottm 
 
         //console.log("<< home component: Get post >>", res)
@@ -109,6 +120,53 @@ export class HomeComponent implements OnInit {
   extractDate(dateTime: string){
     let date = dateTime.slice(0, -14);
     return date;
+  }
+
+  selectedFilter(filter: string){
+
+    console.log("The current filter", filter)
+  
+    if(filter === this.filterOptions[0]){ // if the selected filter is 'none'
+
+      console.log("This is the selected filter:", filter)
+
+      // we need to clear it everytime a new filter is selected otherwise we end up added more into it
+      this.filterPosts = this.posts;
+
+    }else if(filter === this.filterOptions[1]){ // if the selected filter is 'userPosts'
+
+      // we need to clear it everytime a new filter is selected otherwise we end up added more into it
+      this.filterPosts = [];
+
+      console.log("This is the selected filter:", filter)
+
+      this.posts.forEach((post) => {
+        if(post.userId === this.userDetails.id){
+          this.filterPosts.push(post);
+        }
+      })
+
+    }else if(filter === this.filterOptions[2]){ // if the selected filter is 'mostViews'
+
+      // we need to clear it everytime a new filter is selected otherwise we end up added more into it
+      this.filterPosts = [];
+      this.filterPosts = this.posts.sort((a, b) => (b.views - a.views));
+
+      console.log("This is the selected filter:", filter)
+
+      
+
+    }else if(filter === this.filterOptions[3]){ // if the selected filter is 'leastViews'
+
+      // we need to clear it everytime a new filter is selected otherwise we end up added more into it
+      this.filterPosts = [];
+      this.filterPosts = this.posts.sort((a, b) => (a.views - b.views));
+      console.log("This is the selected filter:", filter)
+      
+    }
+
+    console.log(this.filterPosts);
+    this.changeRef.detectChanges();
   }
 
 }
