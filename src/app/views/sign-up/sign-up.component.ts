@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { take, timeout } from 'rxjs';
+import { ReplaySubject, take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
 import { ConsoleColor } from 'src/app/libs/console-color';
 import { IUser } from 'src/app/models/iuser';
@@ -18,7 +18,12 @@ export class SignUpComponent implements OnInit {
 
   public signUpForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private userService: UserService) { }
+  public isEmailTaken: boolean;
+
+  public _onSignUpReturned = new ReplaySubject<boolean>(1);
+  public onSignUpReturned$ = this._onSignUpReturned.asObservable();
+
+  constructor(private fb: FormBuilder, private router: Router, private userService: UserService, private changeRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     
@@ -81,7 +86,7 @@ export class SignUpComponent implements OnInit {
     this.userService.createUser(user).pipe(take(1), timeout(10000)).subscribe({
       next: (result: ResponseCreateUser) => {
 
-        console.log("%c email already exist", result);
+        console.log(" email already exist", result);
 
         // if the response json from backend returns a true value for isCreated Then do this
         if(result.isCreated){
@@ -101,7 +106,12 @@ export class SignUpComponent implements OnInit {
           console.log("<< Signup component >>: " + JSON.stringify(result));
       },
       error: (e) => {
-        console.error(e)
+        // If the server returns 400, then it means the email already existed
+        // since in mysql database I made email unique
+        this.isEmailTaken = true; // flag isEmailTaken to true as the server has responsed 400
+        this._onSignUpReturned.next(true); // once the subscription has error, we will notified the observer 
+        this.changeRef.detectChanges(); // tell this view there were changes made an update the view
+        console.error("Bad request: 400", e)
       }
     });;
 

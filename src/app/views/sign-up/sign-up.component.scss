@@ -17,4 +17,15 @@ form {
         width: 12rem;
         background-color: #A9927D;
     }
+}
+
+.error{
+  border: thin solid red;
+  text-align: left;
+  padding: 1em;
+  width: 50%;
+  margin: auto;
+  h4{
+    color: red;
   }
+}

@@ -12,9 +12,9 @@ export class HeaderComponent implements OnInit {
   constructor(private changeRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.changeRef.detectChanges();
     if(sessionStorage.getItem('userDetails')){
       this.isLoggedIn = true;
+      this.changeRef.detectChanges();
     }else{
       this.isLoggedIn = false;
     }
