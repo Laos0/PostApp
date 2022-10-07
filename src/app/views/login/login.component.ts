@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { map, take, timeout } from 'rxjs';
+import { map, ReplaySubject, Subject, take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
+import { ConsoleColor } from 'src/app/libs/console-color';
+import { ILoginRes } from 'src/app/models/ilogin-res';
 import { ResponseLogin } from 'src/app/reponses/response-login';
 import { AuthService } from 'src/app/services/auth-service/auth-service';
 
@@ -15,7 +17,13 @@ export class LoginComponent implements OnInit {
   email: string = "";
   password: string = "";
 
-  constructor(private authService: AuthService, private router: Router) { }
+  public _onLoginReturned = new ReplaySubject<boolean>(1);
+  public onLoginReturned$ = this._onLoginReturned.asObservable();
+
+  public incorrectPassword: boolean = false;
+  public incorrectEmail: boolean = false;
+
+  constructor(private authService: AuthService, private router: Router, private changeRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
   }
@@ -35,39 +43,62 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.authService.login(this.email, this.password).pipe(take(1), timeout(10000))
-    // .pipe(map((res: ResponseLogin) => {
-    //   //const r = JSON.stringify(res);
-    //   //const d = JSON.parse(r);
-    //   return d;
-    // }))
-    .subscribe({
-      next: (result: ResponseLogin) => {
-        
-        // log the response to see what the json looks like
-        console.log("THIS IS THE JSON", result)
-        console.log("<< Login component >>", result)
-        if(result.isLoggedIn){
+    this.authService.login(this.email, this.password)
+      .pipe(take(1), timeout(10000))
+      .subscribe({
+        next: (res: ResponseLogin) => {
 
+          // log the response to see what the json looks like
+          console.log("<< Login component >>", res)
 
-          /* ** TODO **
-            Backend has to send a json of UserDetails and we have to store userdetail onto the session
-          */
+          // if the query is good on the backend
+          if(res.isQueryGood){
+            // if the email exists
+            if(res.emailExist){
+                // if the password matches
+                if(res.passwordMatch){
+                    // if the user successfully loggedin
+                    if(res.isLoggedIn){
+                        // store the user's detail into session storage for future uses
+                        sessionStorage.setItem("userDetails", JSON.stringify(res));
+                        console.log("%c SUCCESS LOGIN", ConsoleColor.GREEN)
+                        this.incorrectEmail = false;
+                        this.incorrectPassword = false;
+                        // The log in is successful, redirect the user to the home page
+                        this.router.navigate([AppRoutes.HOME]);
+                    }
+                }else{
+                    // if the password did not match
+                    this.incorrectPassword = true;
+                    this.incorrectEmail = false;
+                    console.error("%c PASSWORD DONT MATCH: FROM login.component.ts", ConsoleColor.RED)
+                    //this.router.navigate([AppRoutes.ERROR])
+                }
+            }else{
+                // if the email does not exist
+                this.incorrectEmail = true;
+                console.log("%c << Login Component >> Email does not exist", ConsoleColor.RED)
+            }
+          }else{
+              // if the query is bad
+              console.log("THE QUERY FOR LOGIN IS BAD")
+          }
           
-          sessionStorage.setItem("userDetails", JSON.stringify(result));
-          console.log("SUCCESS LOGIN")
-          this.router.navigate([AppRoutes.HOME]);
-        }else{
-          console.error("FAILED LOGIN: FROM login.component.ts")
-          this.router.navigate([AppRoutes.ERROR])
-        }
-        
+        },
+        error: (e) => {
+          console.error("<< Login Error >>", e)
+        },
+        complete: () => {
 
-      },
-      error: (e) => {
-        console.error(e)
-      }
-    });
+          // Once the subscribe is completed, we will flag one of the two booleans
+          // isThereEmail and 
+          this._onLoginReturned.next(true);
+          
+          // once we asign this.incorrectEmail we need to update the view after the subscription is completed
+          this.changeRef.detectChanges();
+          console.log("Subscribe completed: ", this.onLoginReturned$)
+        }
+      });
     //console.log(this.email + " " + this.password);
   }
 

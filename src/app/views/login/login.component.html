@@ -1,10 +1,31 @@
 <div class="container">
-	<h2>Login!</h2>
-	<input type="text" #searchbar (keyup)="getEmail($event)" placeholder="Email.">
-	<br>
-	<input type="text" #searchbar (keyup)="getPassword($event)" placeholder="Password">
-	<br>
-	<button (click)="login()">Login</button>
-	<br>
-	<button (click)="signUp()">Sign Up</button>
+	<div class="login-container">
+
+		<ng-container *ngIf="(incorrectEmail && onLoginReturned$ | async); then emailDoesNotExit"></ng-container>
+		<ng-container *ngIf="(incorrectPassword && onLoginReturned$ | async); then passwordIsWrong"></ng-container>
+
+		<h2>Login!</h2>
+		<input type="text" #searchbar (keyup)="getEmail($event)" placeholder="Email.">
+		<br>
+		<input type="password" #searchbar (keyup)="getPassword($event)" placeholder="Password">
+		<br>
+		<button (click)="login()">Login</button>
+		<br>
+		<button (click)="signUp()">Sign Up</button>
+	</div>
 </div>
+
+<!-- Two scenario: email does not exist, password doesnt match-->
+<ng-template #emailDoesNotExit>
+	<div class="error">
+		<h4>There was a problem</h4>
+		<span>We cannot find an account with that email address</span>
+	</div>
+</ng-template>
+
+<ng-template #passwordIsWrong>
+	<div class="error">
+		<h4>There was a problem</h4>
+		<span>The password is incorrect</span>
+	</div>
+</ng-template>
