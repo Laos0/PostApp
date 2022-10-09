@@ -7,6 +7,7 @@ import { ConsoleColor } from 'src/app/libs/console-color';
 import { IPost } from 'src/app/models/ipost';
 import { IPostDetails } from 'src/app/models/ipost-details';
 import { IPostEdit } from 'src/app/models/ipost-edit';
+import { DialogService } from 'src/app/services/dialog-service/dialog.service';
 import { PostDetailsService } from 'src/app/services/post-details-service/post-details.service';
 import { PostService } from 'src/app/services/post-service/post.service';
 
@@ -23,7 +24,8 @@ export class EditPostComponent implements OnInit {
   constructor(private fb: FormBuilder, 
     private postService: PostService, 
     private router: Router,
-    private postDetailsService: PostDetailsService) { }
+    private postDetailsService: PostDetailsService,
+    private dialogService: DialogService) { }
 
   ngOnInit(): void {
     
@@ -68,30 +70,42 @@ export class EditPostComponent implements OnInit {
   getTextField(){return this.postForm.get('textField').value;};
 
   editPost(){
-    const editPost: IPostEdit = {
-      id: this.post.id,
-      userId: JSON.parse(sessionStorage.getItem("userDetails")).id,
-      title: this.getTitle(),
-      text: this.getTextField(),
-    }
 
-    // console.log("<<  psotr component >>", JSON.parse(sessionStorage.getItem("userDetails")).id)
-    // if you want http to fire, you must SUBSCRIBE
-    this.postService.editPost(editPost).pipe(take(1), timeout(10000)).subscribe({
-      next: (res: any) => {
-
-        console.log("<< Edit Post Components >>", res, ConsoleColor.GREEN);
-        if(res.message === true){
-          // TODO: if the response is true, redirect client to their edited post
-          this.router.navigate([AppRoutes.HOME]);
+    let confirmation = this.dialogService.confirmDialog({
+      message: "Are you sure you want to edit this post?",
+      confirmText: "Yes",
+      cancelText: "No"
+    }).subscribe((data) => {
+      // if user clicked yes then proceed to delete the post
+      if(data === true){
+        const editPost: IPostEdit = {
+          id: this.post.id,
+          userId: JSON.parse(sessionStorage.getItem("userDetails")).id,
+          title: this.getTitle(),
+          text: this.getTextField(),
         }
-      },
-      error: (e) => {
-        console.error(e);
+    
+        // console.log("<<  psotr component >>", JSON.parse(sessionStorage.getItem("userDetails")).id)
+        // if you want http to fire, you must SUBSCRIBE
+        this.postService.editPost(editPost).pipe(take(1), timeout(10000)).subscribe({
+          next: (res: any) => {
+    
+            console.log("<< Edit Post Components >>", res, ConsoleColor.GREEN);
+            if(res.message === true){
+              // TODO: if the response is true, redirect client to their edited post
+              this.router.navigate([AppRoutes.HOME]);
+            }
+          },
+          error: (e) => {
+            console.error(e);
+          }
+        });
+    
+        console.log("<< Edit post component >>", editPost, ConsoleColor.YELLOW);
       }
     });
-
-    console.log("<< Edit post component >>", editPost, ConsoleColor.YELLOW);
+    
+    
   }
 
   cancelPost(){
