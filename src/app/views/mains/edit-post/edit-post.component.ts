@@ -76,8 +76,9 @@ export class EditPostComponent implements OnInit {
       confirmText: "Yes",
       cancelText: "No"
     }).subscribe((data) => {
-      // if user clicked yes then proceed to delete the post
+      // if user clicked yes then proceed to edit the post
       if(data === true){
+        
         const editPost: IPostEdit = {
           id: this.post.id,
           userId: JSON.parse(sessionStorage.getItem("userDetails")).id,

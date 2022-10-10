@@ -5,6 +5,7 @@ import { take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
 import { IPost } from 'src/app/models/ipost';
 import { IPostDetails } from 'src/app/models/ipost-details';
+import { DialogService } from 'src/app/services/dialog-service/dialog.service';
 import { PostDetailsService } from 'src/app/services/post-details-service/post-details.service';
 import { PostService } from 'src/app/services/post-service/post.service';
 
@@ -21,7 +22,8 @@ export class PostComponent implements OnInit {
 
   constructor(private fb: FormBuilder, 
     private postService: PostService, 
-    private router: Router) { }
+    private router: Router,
+    private dialogService: DialogService) { }
 
   ngOnInit(): void {
 
@@ -49,30 +51,41 @@ export class PostComponent implements OnInit {
   getTextField(){return this.postForm.get('textField').value;};
 
   submitPost(){
-    const post: IPost = {
-      userId: JSON.parse(sessionStorage.getItem("userDetails")).id,
-      title: this.getTitle(),
-      text: this.getTextField(),
-      views: 0
-    }
 
-    // console.log("<<  psotr component >>", JSON.parse(sessionStorage.getItem("userDetails")).id)
-
-    // if you want http to fire, you must SUBSCRIBE
-    this.postService.createPost(post).pipe(take(1), timeout(10000)).subscribe({
-      next: (res: any) => {
-
-        //console.log("<< post components >>", res);
-        if(res === true){
-          // if the response is true, redirect client to home component 
-          // and add post into an array list?
-          this.router.navigate([AppRoutes.HOME]);
+    let confirmation = this.dialogService.confirmDialog({
+      message: "Are you sure you want to submit this post?",
+      confirmText: "Yes",
+      cancelText: "No"
+    }).subscribe((data) => {
+      if(data === true){
+        
+        const post: IPost = {
+          userId: JSON.parse(sessionStorage.getItem("userDetails")).id,
+          title: this.getTitle(),
+          text: this.getTextField(),
+          views: 0
         }
-      },
-      error: (e) => {
-        console.error(e);
+    
+        // console.log("<<  psotr component >>", JSON.parse(sessionStorage.getItem("userDetails")).id)
+    
+        // if you want http to fire, you must SUBSCRIBE
+        this.postService.createPost(post).pipe(take(1), timeout(10000)).subscribe({
+          next: (res: any) => {
+    
+            //console.log("<< post components >>", res);
+            if(res === true){
+              // if the response is true, redirect client to home component 
+              // and add post into an array list?
+              this.router.navigate([AppRoutes.HOME]);
+            }
+          },
+          error: (e) => {
+            console.error(e);
+          }
+        });
       }
     });
+
 
     //console.log("<< post component >>", post);
   }
