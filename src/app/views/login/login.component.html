@@ -4,7 +4,7 @@
 		<ng-container *ngIf="(incorrectEmail && onLoginReturned$ | async); then emailDoesNotExit"></ng-container>
 		<ng-container *ngIf="(incorrectPassword && onLoginReturned$ | async); then passwordIsWrong"></ng-container>
 
-		<h2>Login!</h2>
+		<h2>Login</h2>
 		<input type="text" #searchbar (keyup)="getEmail($event)" placeholder="Email.">
 		<br>
 		<input type="password" #searchbar (keyup)="getPassword($event)" placeholder="Password">

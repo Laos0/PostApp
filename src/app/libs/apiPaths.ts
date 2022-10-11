@@ -1,6 +1,9 @@
 export class ApiEndPoints {
 
 
+    // HEROKU hosting
+    //public static readonly BASE_URL: string = 'https://nodejs-post-app-server.herokuapp.com/';
+
     public static readonly BASE_URL: string = 'http://localhost:8080/';
 
     // the version to concat to all api calls
