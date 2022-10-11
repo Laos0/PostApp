@@ -1,7 +1,9 @@
 <div class="header">
-    <h1>Post</h1>
-    
-    <ng-template [ngIf]="isLoggedIn">
+    <h1 (click)="returnToHome()">Post</h1>
+    <ng-container *ngIf="(onLoginReturned$ | async)">
         <h3><a href="#" id="logout" (click)="logout()">logout</a></h3>
-    </ng-template>
+    </ng-container>
 </div>
+
+<ng-template #showLogout>
+</ng-template>

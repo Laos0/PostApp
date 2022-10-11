@@ -64,6 +64,8 @@ export class LoginComponent implements OnInit {
                         console.log("%c SUCCESS LOGIN", ConsoleColor.GREEN)
                         this.incorrectEmail = false;
                         this.incorrectPassword = false;
+                        this.authService.loginSuccess();
+                
                         // The log in is successful, redirect the user to the home page
                         this.router.navigate([AppRoutes.HOME]);
                     }

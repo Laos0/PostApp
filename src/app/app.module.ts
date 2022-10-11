@@ -22,6 +22,7 @@ import {MatInputModule} from '@angular/material/input';
 import { ComfirmDeleteComponent } from './views/dialogs/comfirm-delete/comfirm-delete.component';
 import { EditPostComponent } from './views/mains/edit-post/edit-post.component';
 import {MatSelectModule} from '@angular/material/select';
+import { GuardLogin } from './libs/guard-login';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatSelectModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [GuardLogin],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

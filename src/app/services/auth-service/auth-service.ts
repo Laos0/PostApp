@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { ApiEndPoints } from 'src/app/libs/apiPaths';
 import { ResponseLogin } from 'src/app/reponses/response-login';
 
@@ -8,6 +8,10 @@ import { ResponseLogin } from 'src/app/reponses/response-login';
   providedIn: 'root'
 })
 export class AuthService {
+
+
+  private _onLoginReturned: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+  public onLoginReturned$: Observable<boolean> = this._onLoginReturned.asObservable();
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -27,4 +31,14 @@ export class AuthService {
     console.log(ApiEndPoints.USER_LOGIN);
     return this.http.get(ApiEndPoints.USER_LOGIN);
   }
+
+  loginSuccess(){
+    this._onLoginReturned.next(true);
+  }
+
+  logoutSuccess(){
+    this._onLoginReturned.next(false);
+  }
+
+
 }
