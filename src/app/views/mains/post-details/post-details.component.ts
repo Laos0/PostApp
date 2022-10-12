@@ -93,7 +93,7 @@ export class PostDetailsComponent implements OnInit {
         };
         
         
-        console.log("<< Selected Post >>", this.post.date)
+        //console.log("<< Selected Post >>", this.post.date)
         this._onPostReturned.next();
         
         // TODO: When we press refresh we lose all its post details, we must store it in session
@@ -101,7 +101,7 @@ export class PostDetailsComponent implements OnInit {
       });
       
       this.onPostReturned$.pipe(take(1)).subscribe(() => {
-        console.log("Start of coment request");
+        //("Start of coment request");
         
         this.getUserPostDetails(this.post.userId);
 
@@ -213,7 +213,7 @@ export class PostDetailsComponent implements OnInit {
     // TODO: NEED TO RERENDER THE COMPONENT after comment is submitted
     this.commentService.addComment(comment).pipe(take(1)).subscribe({
       next: (res) => {
-        console.log("%c << COMMENT >> ", res)
+        //console.log("%c << COMMENT >> ", res)
         this.ngOnInit();
       },
       error: (e) => {
@@ -225,12 +225,12 @@ export class PostDetailsComponent implements OnInit {
     });
 
     this.commentForm.dirty;
-    console.log(comment);
+    //console.log(comment);
   }
 
   // when reply is clicked
   reply(){
-    console.log("%c Clicking reply", ConsoleColor.GREEN);
+    //console.log("%c Clicking reply", ConsoleColor.GREEN);
     this.isReply = true;
   }
 

@@ -23,6 +23,8 @@ import { ComfirmDeleteComponent } from './views/dialogs/comfirm-delete/comfirm-d
 import { EditPostComponent } from './views/mains/edit-post/edit-post.component';
 import {MatSelectModule} from '@angular/material/select';
 import { GuardLogin } from './libs/guard-login';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { GuardLogin } from './libs/guard-login';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatToolbarModule,
+    MatIconModule,
     BrowserAnimationsModule
   ],
   providers: [GuardLogin],

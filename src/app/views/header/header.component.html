@@ -1,7 +1,21 @@
-<div class="header">
-    <h1 (click)="returnToHome()">Post</h1>
+
+<mat-toolbar class="mat-toolbar">
+    <button mat-icon-button class="menu-btn" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="app-name" (click)="returnToHome()">Post</span>
+    <span class="flex"></span>
     <ng-container *ngIf="(onLoginReturned$ | async)">
         <h3><a href="#" id="logout" (click)="logout()">logout</a></h3>
     </ng-container>
-</div>
 
+</mat-toolbar>
+  <!-- 
+    <div class="header">
+        <h1 (click)="returnToHome()">Post</h1>
+        <ng-container *ngIf="(onLoginReturned$ | async)">
+            <h3><a href="#" id="logout" (click)="logout()">logout</a></h3>
+        </ng-container>
+    </div>
+
+  -->

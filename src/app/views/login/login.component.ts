@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
         next: (res: ResponseLogin) => {
 
           // log the response to see what the json looks like
-          console.log("<< Login component >>", res)
+          //console.log("<< Login component >>", res)
 
           // if the query is good on the backend
           if(res.isQueryGood){
