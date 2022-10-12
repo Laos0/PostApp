@@ -7,6 +7,7 @@ import { ConsoleColor } from 'src/app/libs/console-color';
 import { IUser } from 'src/app/models/iuser';
 import { User } from 'src/app/models/user';
 import { ResponseCreateUser } from 'src/app/reponses/response-create-user';
+import { AuthService } from 'src/app/services/auth-service/auth-service';
 import { UserService } from 'src/app/services/user-service/user.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class SignUpComponent implements OnInit {
   public _onSignUpReturned = new ReplaySubject<boolean>(1);
   public onSignUpReturned$ = this._onSignUpReturned.asObservable();
 
-  constructor(private fb: FormBuilder, private router: Router, private userService: UserService, private changeRef: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private router: Router, private userService: UserService, private changeRef: ChangeDetectorRef,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     
@@ -104,6 +106,8 @@ export class SignUpComponent implements OnInit {
 
           // backend sends a json, we have to stringify it to read it
           console.log("<< Signup component >>: " + JSON.stringify(result));
+
+          this.authService.loginSuccess();
       },
       error: (e) => {
         // If the server returns 400, then it means the email already existed
