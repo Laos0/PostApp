@@ -28,8 +28,6 @@
     <ng-container *ngIf="(onCommentReturned$ | async); else showNoComments">
 
         <div class="commentSection">
-            <!-- TODO: Need Input section when users click on comment button,
-                This is only Visible when comment button is pressed-->
                 <div class="comments">
                     <h3 class="comments-title">Comments</h3>
                     <div class="comments-form-title"></div>
@@ -39,7 +37,7 @@
                           <mat-label>Leave a comment</mat-label>
                           <textarea formControlName=comment matInput placeholder="Add a comment..."></textarea>
                         </mat-form-field>
-                        <button type="button" class="comment-btn" (click)="submitCommentForm()">Comment</button>
+                        <button type="button" class="comment-btn" (click)="submitCommentForm()" [disabled]="commentForm.invalid">Comment</button>
                       </form>
 
 

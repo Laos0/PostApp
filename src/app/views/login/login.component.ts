@@ -28,13 +28,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // get the user's input on email
   getEmail(event: any){
-    console.log(event.target.value);
     this.email = event.target.value;
   }
 
+  // get the user's input on password
   getPassword(event: any){
-    console.log(event.target.value);
     this.password = event.target.value;
   }
 

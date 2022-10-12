@@ -1,3 +1,4 @@
+
 <div class="container">
 
         <form [formGroup]=postForm (ngSubmit)=submitPost()>
@@ -9,7 +10,7 @@
             <textarea id="text" type="textarea" class="form-control" formControlName=textField placeholder="text..."></textarea>
             <br>
 
-            <button class="submit-btn">Submit</button>
+            <button class="submit-btn" [disabled]="postForm.invalid">Submit</button>
             <button type="button" class="cancel-btn" (click)="cancelPost()">Cancel</button>
             
         </form>

@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
       // I have to use dataType any, otherwise I wont be able
       // to extract the createdDate as my IPost does not have it declared in the beginnning
       next: (res: any) => {
-        console.log("<< THE POSTS DETAILS >>", res)
+        //console.log("<< THE POSTS DETAILS >>", res)
         this.posts = res;
         this.filterPosts = this.posts;
         // TODO: Sort the posts by date latest at the top and oldest at the bottm 
@@ -114,7 +114,7 @@ export class HomeComponent implements OnInit {
 
     // this.router.navigate([AppRoutes.POST_DETAILS], {relativeTo: this.activatedRoute})
     this.router.navigate([AppRoutes.POST_DETAILS]);
-    console.log("CLICKED", post.createdDate);
+    //console.log("CLICKED", post.createdDate);
   }
 
   extractDate(dateTime: string){
@@ -124,11 +124,11 @@ export class HomeComponent implements OnInit {
 
   selectedFilter(filter: string){
 
-    console.log("The current filter", filter)
+    //console.log("The current filter", filter)
   
     if(filter === this.filterOptions[0]){ // if the selected filter is 'none'
 
-      console.log("This is the selected filter:", filter)
+      //console.log("This is the selected filter:", filter)
 
       // we need to clear it everytime a new filter is selected otherwise we end up added more into it
       this.filterPosts = this.posts;
@@ -138,7 +138,7 @@ export class HomeComponent implements OnInit {
       // we need to clear it everytime a new filter is selected otherwise we end up added more into it
       this.filterPosts = [];
 
-      console.log("This is the selected filter:", filter)
+      //console.log("This is the selected filter:", filter)
 
       this.posts.forEach((post) => {
         if(post.userId === this.userDetails.id){
@@ -152,7 +152,7 @@ export class HomeComponent implements OnInit {
       this.filterPosts = [];
       this.filterPosts = this.posts.sort((a, b) => (b.views - a.views));
 
-      console.log("This is the selected filter:", filter)
+      //console.log("This is the selected filter:", filter)
 
       
 
@@ -161,11 +161,11 @@ export class HomeComponent implements OnInit {
       // we need to clear it everytime a new filter is selected otherwise we end up added more into it
       this.filterPosts = [];
       this.filterPosts = this.posts.sort((a, b) => (a.views - b.views));
-      console.log("This is the selected filter:", filter)
+      //console.log("This is the selected filter:", filter)
       
     }
 
-    console.log(this.filterPosts);
+    //console.log(this.filterPosts);
     this.changeRef.detectChanges();
   }
 
