@@ -85,3 +85,18 @@ img{
     margin-top: 30px;
 }
 
+button:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    
+}
+button::after {
+    background-color: white;
+}
+
+button::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 50%;
+}
+

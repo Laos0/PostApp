@@ -83,7 +83,7 @@
           <mat-label>Leave a comment</mat-label>
           <textarea formControlName=comment matInput placeholder="Add a comment..."></textarea>
         </mat-form-field>
-        <button class="comment-btn">Comment</button>
+        <button class="comment-btn" [disabled]="commentForm.invalid">Comment</button>
       </form>
 </ng-template>
 
@@ -93,6 +93,6 @@
           <mat-label>Leave a comment</mat-label>
           <textarea formControlName=replyComment matInput placeholder="Add a reply comment..."></textarea>
         </mat-form-field>
-        <button class="comment-btn">Comment</button>
+        <button class="comment-btn" [disabled]="commentForm.invalid">Comment</button>
       </form>
 </ng-template>

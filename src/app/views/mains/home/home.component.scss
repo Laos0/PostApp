@@ -1,16 +1,81 @@
 .container{
     background-color: tan;
-    padding: 100px;
+    padding: 50px;
     margin: 0 auto;
     text-align: center;
+    .add-post{
+        color:black;
+    }
+
+    .filter{
+        float: right;
+        padding-right: 1em;
+    }
     
-    button {
+    .btn {
+        float: left;
         border-radius: .7em;
         padding: .5em;
-        margin: .5em;
+        margin: 1em;
         width: 10em;
         background-color: #A9927D;
-    }   
+        transition: all .45s ease-Out;
+        border: 2px solid white;
+    }  
+
+    .btn:link,
+    .btn:visited {
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 15px 40px;
+        display: inline-block;
+        border-radius: 100px;
+        transition: all .2s;
+        position: absolute;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+    }
+
+    .btn:active {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-white {
+        background-color: white;
+        color: #777;
+    }
+
+    .btn::after {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 100px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all .4s;
+    }
+
+    .btn-white::after {
+        background-color: white;
+    }
+
+    .btn:hover::after {
+        transform: scaleX(1.2) scaleY(1.4);
+        opacity: 50%;
+    }
+
+    .btn-animated {
+        animation: moveInBottom 5s ease-out;
+        animation-fill-mode: backwards;
+    }
 
     h2 {
         padding-top: 0em;
@@ -22,12 +87,26 @@
             background-color: #A9927D;
             padding: 1em;
             margin: 1em;
-            border: thin solid black;
         }
         .selectableList:hover{
-            background-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+            background-color: #cab7a4;
             cursor: pointer;
             
+        }
+        .selectableList::after {
+            background-color: white;
+        }
+    
+        .selectableList::after {
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 50%;
+        }
+    
+        .selectableList{
+            animation: moveInBottom 1s ease-out;
+            animation-fill-mode: backwards;
         }
         .createdDate{
             font-size: 10px;
@@ -44,5 +123,17 @@
         }
         
 
+    }
+}
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
     }
 }

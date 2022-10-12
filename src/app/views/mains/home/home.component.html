@@ -1,7 +1,7 @@
 <div class="container">
     <h2>Hello, {{firstName}}</h2>
-    <button (click)="post()">Add A Post</button>
-    <mat-form-field appearance="fill">
+    <a class="btn btn-white btn-        animate" (click)="post()"><span class="add-post">Add Post</span></a>
+    <mat-form-field appearance="fill" class="filter">
         <mat-label>Filter</mat-label>
         <!-- When selecting a filter, we will call selectedFilter and filter posts based on it -->
         <mat-select [(value)]="selected" (valueChange)="selectedFilter(selected)">
@@ -12,7 +12,7 @@
         </mat-select>
       </mat-form-field>
       
-
+      <br><br><br>
     <div class="postContainer">
         <div class="selectableList" *ngFor="let post of filterPosts" (click)="getPostDetails(post)">
             <span>{{post.title}}</span>
