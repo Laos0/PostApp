@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, ReplaySubject, Subject, take, timeout } from 'rxjs';
 import { AppRoutes } from 'src/app/app-routes';
+import { ApiEndPoints } from 'src/app/libs/apiPaths';
 import { ConsoleColor } from 'src/app/libs/console-color';
 import { ILoginRes } from 'src/app/models/ilogin-res';
 import { ResponseLogin } from 'src/app/reponses/response-login';
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router, private changeRef: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    
   }
 
   // get the user's input on email

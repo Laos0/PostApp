@@ -113,4 +113,6 @@ export class EditPostComponent implements OnInit {
     this.router.navigate([AppRoutes.HOME]);
   }
 
+  // TODO: Check if title is null or is text null
+
 }
