@@ -11,7 +11,8 @@ import { AuthService } from 'src/app/services/auth-service/auth-service';
 })
 export class HeaderComponent implements OnInit {
 
-  public isLoggedIn: boolean = false;
+
+  public isLoggedIn: boolean = false; // flag needed to toggle the logout button
   public _onLoginReturned = new ReplaySubject<boolean>(1);
   public onLoginReturned$ = this._onLoginReturned.asObservable();
 

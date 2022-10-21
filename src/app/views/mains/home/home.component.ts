@@ -28,6 +28,9 @@ export class HomeComponent implements OnInit {
   public filterOptions: string[] = ['none', 'userPosts', 'mostViews', 'leastViews'];
   public filterPosts: any[];
 
+  // if the current user has no posts we will flag it to display ngTemplate
+  public havePosts: boolean;
+
   // The post information
   public firstName: string;
   public posts: any[];

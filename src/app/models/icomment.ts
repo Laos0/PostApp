@@ -1,3 +1,4 @@
+// Interface to intercept the incoming response from nodejs server
 export interface IComment{
     id?: number,
     userId: number,

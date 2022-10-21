@@ -29,6 +29,7 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit(): void {
     
+    // TODO: need to add in more validators, maybe regex to prevent swear words
     this.signUpForm = this.fb.group({
       firstName: [
         '',

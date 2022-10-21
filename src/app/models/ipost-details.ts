@@ -1,3 +1,4 @@
+// interface to handle the post details response on nodejs
 export interface IPostDetails {
     id: number;
     userId: number;

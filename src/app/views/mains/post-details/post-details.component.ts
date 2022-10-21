@@ -37,6 +37,7 @@ export class PostDetailsComponent implements OnInit {
   public replyCommentForm: FormGroup;
   public isReply: boolean = false;
 
+  // handling async data for each observables that subscribes
   public _onPostReturned = new ReplaySubject<void>(1);
   public onPostReturned$ = this._onPostReturned.asObservable();
 
@@ -61,6 +62,7 @@ export class PostDetailsComponent implements OnInit {
     ngOnInit(): void {
       this.sessionUser = JSON.parse(sessionStorage.getItem("userDetails"));
 
+      // form group and its validators for user's input
       this.commentForm = this.fb.group({
         comment: [
           '',
@@ -81,6 +83,7 @@ export class PostDetailsComponent implements OnInit {
         ]
       });
       
+      // request the selected post 
       this.postDetailsService.onSelectPost$.pipe(take(1)).subscribe((data) => {
         
         this.post = {
@@ -164,6 +167,7 @@ export class PostDetailsComponent implements OnInit {
     //console.log("getUserPostDetails");
   }
 
+  // delete the current post 
   deletePost(id: number){
 
     let confirmation = this.dialog.confirmDialog({
@@ -182,11 +186,13 @@ export class PostDetailsComponent implements OnInit {
 
   }
 
+  // extracting the date we want 
   extractDate(dateTime: string){
     let date = dateTime.slice(0, -14);
     return date;
   }
 
+  // send the current edited post to backend to be modified
   editPost(post: IPostDetails){
     this.postDetailsService.onSelectPost(post);
     this.router.navigate([AppRoutes.POST_EDIT]);
@@ -233,12 +239,6 @@ export class PostDetailsComponent implements OnInit {
     //console.log("%c Clicking reply", ConsoleColor.GREEN);
     this.isReply = true;
   }
-
-  submitReplyCommentForm(){
-    
-  }
-
-
 }
 
 

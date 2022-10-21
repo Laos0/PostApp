@@ -1,3 +1,4 @@
+// class to build the user object and send it to the backend nodejs
 export class User{
 
     // id is auto generated on backend

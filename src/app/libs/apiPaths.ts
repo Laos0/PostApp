@@ -25,6 +25,8 @@ export class ApiEndPoints {
     public static readonly GET_POSTS: string = this.BASE_URL + this.TARGET_VERSION + 'posts/all';
     public static readonly POST_ADD_VIEW_COUNT: string = this.BASE_URL + this.TARGET_VERSION + 'posts/id/addViews';
 
+    // TODO: Need to update bottom apis so they are not redundant
+
     // for deleting: http://localhost:8080/posts/ + id + 'delete'
     public static readonly DELETE_POST: string = this.BASE_URL + this.TARGET_VERSION + 'posts/';
 
