@@ -239,6 +239,10 @@ export class PostDetailsComponent implements OnInit {
     //console.log("%c Clicking reply", ConsoleColor.GREEN);
     this.isReply = true;
   }
+
+  submitReplyCommentForm(){
+    
+  }
 }
 
 
