@@ -1,3 +1,4 @@
+// a class I created to make my console logs colorfied 
 export class ConsoleColor{
    
     // this is how you use this class

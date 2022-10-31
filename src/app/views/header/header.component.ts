@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   public onLoginReturned$ = this._onLoginReturned.asObservable();
 
   
-  constructor(private changeRef: ChangeDetectorRef, private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
       next: (res) => {
 
         this._onLoginReturned.next(res);
-        //this.changeRef.detectChanges();
+        
       }
     });
 
