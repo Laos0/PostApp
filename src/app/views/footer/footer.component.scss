@@ -1,11 +1,9 @@
 .footer {
-    padding: 50px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
     text-align: center;
     background: #7A542E;
-    color: white;
-    font-size: 25px;
-    min-height: 10%;
-    display: grid;
-    grid-template-rows: auto 1fr auto;  
-    
 }

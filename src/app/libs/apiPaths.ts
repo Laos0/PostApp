@@ -5,9 +5,9 @@ export class ApiEndPoints {
     //public static readonly BASE_URL: string = 'https://nodejs-post-app-server.herokuapp.com/';
 
     // AWS backend server hosting
-    public static readonly BASE_URL: string = '';
+    //public static readonly BASE_URL: string = '';
 
-    //public static readonly BASE_URL: string = 'http://localhost:8080/';
+    public static readonly BASE_URL: string = 'http://localhost:8080/';
 
     // the version to concat to all api calls
     public static readonly VERSION1: string = 'api/v1/';

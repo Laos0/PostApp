@@ -4,6 +4,7 @@ import { AuthService } from './auth-service';
 
 describe('AuthServiceService', () => {
   let service: AuthService;
+  
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
@@ -14,8 +15,6 @@ describe('AuthServiceService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should error up', () => {
-
-
-  })
+  
 });
+
