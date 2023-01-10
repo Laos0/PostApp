@@ -35,6 +35,9 @@ export class HomeComponent implements OnInit {
   public firstName: string;
   public posts: any[];
 
+  // if filterpost is empty, we need to flag it to show ng template saying there is no posts
+  public isFilterPostEmpty: boolean;
+
   constructor(private router: Router, private postService: PostService, 
     private postDetailsService: PostDetailsService, private activatedRoute: ActivatedRoute,
     private userService: UserService,
@@ -42,6 +45,7 @@ export class HomeComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.isFilterPostEmpty = false;
     this.firstName = JSON.parse(sessionStorage.getItem("userDetails")).firstName;
     const user = JSON.parse(sessionStorage.getItem("userDetails"));
 
@@ -136,6 +140,9 @@ export class HomeComponent implements OnInit {
       // we need to clear it everytime a new filter is selected otherwise we end up added more into it
       this.filterPosts = this.posts;
 
+      // setting isFilterPost to false
+      this.isFilterPostEmpty = false;
+
     }else if(filter === this.filterOptions[1]){ // if the selected filter is 'userPosts'
 
       // we need to clear it everytime a new filter is selected otherwise we end up added more into it
@@ -149,6 +156,16 @@ export class HomeComponent implements OnInit {
         }
       })
 
+      if(this.filterPosts.length == 0){
+
+        // we need to flag the boolean when filterpost is empty
+        this.isFilterPostEmpty = true;
+
+        console.log("There is no posts");
+      }else{
+        this.isFilterPostEmpty = false;
+      }
+
     }else if(filter === this.filterOptions[2]){ // if the selected filter is 'mostViews'
 
       // we need to clear it everytime a new filter is selected otherwise we end up added more into it
@@ -157,7 +174,8 @@ export class HomeComponent implements OnInit {
 
       //console.log("This is the selected filter:", filter)
 
-      
+      // setting isFilterPost to false
+      this.isFilterPostEmpty = false;
 
     }else if(filter === this.filterOptions[3]){ // if the selected filter is 'leastViews'
 
@@ -165,6 +183,9 @@ export class HomeComponent implements OnInit {
       this.filterPosts = [];
       this.filterPosts = this.posts.sort((a, b) => (a.views - b.views));
       //console.log("This is the selected filter:", filter)
+
+      // setting isFilterPost to false
+      this.isFilterPostEmpty = false;
       
     }
 

@@ -21,4 +21,16 @@
             <span class="userName">Post by {{post.first_name}} {{post.last_name}}</span>
         </div>
     </div>
+
+    <div *ngIf="isFilterPostEmpty then emptyPost">
+      
+    </div>
+
+    <div class="testing">
+
+    </div>
 </div>
+
+<ng-template #emptyPost>
+  <p>You do not have any posts</p>
+</ng-template>

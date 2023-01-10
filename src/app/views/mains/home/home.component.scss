@@ -3,6 +3,12 @@
     padding: 50px;
     margin: 0 auto;
     text-align: center;
+
+    .testing{
+
+        height: 100; // Only want to show this when my variable isFilterPostEmpty = true
+    }
+    
     .add-post{
         color:black;
     }
